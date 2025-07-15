@@ -1,0 +1,125 @@
+/* Paleta Inspirada en Senderismo y Naturaleza */
+:root {
+    --main-green: #2e7d32;
+    --light-green: #a5d6a7;
+    --earth-brown: #6d4c41;
+    --background-color: #f9fbe7;
+    --text-color: #333;
+    --btn-color: #388e3c;
+    --btn-hover: #1b5e20;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: url('../img/Parque-los-nevados.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Overlay suave para mejor legibilidad */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: -1;
+}
+
+.register-section {
+    width: 100%;
+    max-width: 450px;
+    padding: 2rem;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    animation: fadeInSlide 0.8s ease;
+}
+
+@keyframes fadeInSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    color: var(--main-green);
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.tagline {
+    color: var(--earth-brown);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+.register-form input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-form input:focus {
+    border-color: var(--main-green);
+    outline: none;
+    box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
+}
+
+.btn-register {
+    width: 100%;
+    background-color: var(--btn-color);
+    color: #fff;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-register:hover {
+    background-color: var(--btn-hover);
+    transform: translateY(-2px);
+}
+
+.login-redirect {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.login-redirect a {
+    color: var(--main-green);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-redirect a:hover {
+    text-decoration: underline;
+}
