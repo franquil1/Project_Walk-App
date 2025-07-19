@@ -1,0 +1,80 @@
+<!-- ========= ENCABEZADO ========== -->
+{%load static %}
+
+<header class="header-wrapper">
+  <nav class="main-nav">
+    <!-- Izquierda: Logo y título -->
+    <div class="nav-brand">
+      <img src="{% static '/images/imagenes/logo.jpg' %}" alt="Walk App Logo" class="nav-logo" />
+      <h1 class="nav-title">Walk App</h1>
+    </div>
+
+    <!-- Centro: Enlaces de navegación -->
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Inicio</a></li>
+        <li><a href="{% url 'comunidad' %}">Comunidad</a></li>
+        <li><a href="{% url 'juegos' %}">Juegos</a></li>
+        <li><a href="{% url 'rutas' %}">Rutas</a></li>
+        <li><a href="{% url 'ranking' %}">Ranking</a></li>
+      </ul>
+    </div>
+
+    <!-- Derecha: Búsqueda e inicio de sesión -->
+    <div class="nav-right">
+      <form class="nav-search">
+        <div class="input-container">
+          <input type="text" placeholder="Buscar" class="nav-input" />
+          <button type="submit" class="nav-icon-button" aria-label="Buscar">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+      <a href="{% url 'login' %}" class="btn-login">Iniciar sesión</a>
+    </div>
+
+    <!-- Botón menú hamburguesa -->
+    <div class="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </nav>
+
+  <!-- ========= MENÚ LATERAL MÓVIL ========= -->
+  <div id="mobileMenu" class="mobile-menu">
+    <div class="menu-header">
+      <img src="{% static '/images/imagenes/logo.jpg' %}" alt="Walk App Logo" class="nav-logo" />
+      <h1 class="mobile-menu-titulo">WALK APP</h1>
+      <button id="closeMenu" class="close-btn" aria-label="Cerrar menú">&times;</button>
+    </div>
+      <a href="{% url 'home' %}">Inicio</a>
+      <a href="{% url 'comunidad' %}">Comunidad</a>
+      <a href="{% url 'juegos' %}">Juegos</a>
+      <a href="{% url 'rutas' %}">Rutas</a>
+      <a href="{% url 'ranking' %}">Ranking</a>
+
+    <!-- loging -->
+    <a href="{% url 'login' %}" class="btn-login">Iniciar sesión</a>
+
+    <form class="nav-search">
+      <div class="input-icon-wrapper">
+        <input type="text" placeholder="Buscar" class="nav-input" />
+        <button type="submit" class="nav-button-inside" aria-label="Buscar">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+
+<!-- ========= BIENVENIDA ========= -->
+<div class="bienvenida">
+  <h1 class="text-center">
+    {{ titulo_bienvenida|default:"Bienvenido a WALK APP" }}
+  </h1>
+  <p class="text-center">
+    {{ descripcion_bienvenida|default:"¡Cada paso cuenta!" }}
+  </p>
+</div>
+
+</header>

@@ -1,0 +1,107 @@
+/* Fondo de la página */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background:url(../../images/imagenes/shutterstock_208356901_.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+img{
+    height: 90px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Título principal */
+h1 {
+    text-align: center;
+    color: #472424;
+    margin-top: 40px;
+    font-size: 28px;
+}
+
+/* Contenedor del formulario */
+form {
+    background-color:#f9f9f9;
+    width: 320px;
+    margin: 40px auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(240, 0, 0, 0.2);
+}
+
+/* Campos del formulario */
+form p {
+    margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* Botón de enviar */
+button[type="submit"] {
+    background-color: #0a960a;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #9fa3a8;
+}
+
+/* Mensajes puestas en el  Django */
+ul.messages {
+    list-style: none;
+    padding: 0;
+    width: 320px;
+    margin: 20px auto;
+}
+
+ul.messages li {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+ul.messages li.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+ul.messages li.error {
+    background-color: #f8d7da;
+    color: #ff1128;
+}
+
+/* Enlace de abajo */
+p a {
+    text-align: center;
+    display: block;
+    margin-top: 20px;
+    color: #000000;
+
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}

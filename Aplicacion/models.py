@@ -1,9 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=100, blank=True, null=True) # Campo para el nombre completo
+# Create your models here.
+
+class Usuario(models.Model):
+    nombre_usuario = models.CharField(max_length=100, unique=True)
+    correo_electronico = models.EmailField(unique=True)
+    contraseña = models.CharField(max_length=128)
 
     def __str__(self):
-        return self.user.username
+        return self.nombre_usuario

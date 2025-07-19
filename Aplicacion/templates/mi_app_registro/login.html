@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'css/login/login.css' %}"/>
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    
+    {# Bloque para mostrar mensajes de Django #}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <form method="post">
+        <img src="{% static 'images/imagenes/logo.jpg' %}" alt="Logo">
+        <h1>Iniciar Sesión</h1>
+        {% csrf_token %}
+        {{ form.as_p }} {# Esto renderizará los campos username y password del LoginForm #}
+        <button type="submit">Iniciar Sesión</button>
+        <p>¿No tienes cuenta? <a href="{% url 'mi_app_registro:registro' %}">Regístrate aquí</a></p>
+    </form>
+
+</body>
+</html>

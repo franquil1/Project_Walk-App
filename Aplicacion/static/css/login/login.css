@@ -1,0 +1,113 @@
+/* Fondo de la página */
+body {
+    background-color: #eafaf1;
+    font-family: Arial, sans-serif;
+    background-image:url(../../images/imagenes/shutterstock_208356901_.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+img{
+    height: 90px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+}
+/* Título principal */
+h1 {
+    text-align: center;
+    color: #27ae60;
+    margin: 50px;
+    font-size: 26px;
+}
+
+/* Contenedor del formulario */
+form {
+    background-color: #f9f9f9;
+    width: 320px;
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Campos del formulario */
+form p {
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Botón de enviar */
+button[type="submit"] {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background-color: #27ae60;
+}
+
+/* Mensajes de Django */
+ul.messages {
+    list-style: none;
+    padding: 0;
+    width: 320px;
+    margin: 0 auto 20px auto;
+}
+
+ul.messages li {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+ul.messages li.success {
+    background-color: #a9dfbf;
+    color: #1e8449;
+    border: 1px solid #229954;
+}
+
+ul.messages li.error {
+    background-color: #f8d7da;
+    color: #c0392b;
+    border: 1px solid #e17055;
+}
+
+/* Enlace de registro */
+p{
+    text-align: center;
+    font-size: 14px;
+    margin-top: 20px;
+    color: #000000;
+}
+
+a {
+    margin: 10px;
+    color: #47a747;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
