@@ -11,17 +11,19 @@ html, body {
 }
 
 body {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  display: flex;
-  flex-direction: column;
-  animation: fadeIn 1s ease-in-out;
+    background-image: url(../images/fotos/Wallpaper_Rutas.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 1s ease-in-out;
+    color: #333; /* Color de texto base más suave */
 }
 
 body.fade-out {
-  animation: fadeOut 1s ease-in-out;
+    animation: fadeOut 1s ease-in-out;
 }
 
 h1 {
@@ -36,158 +38,330 @@ p {
   margin-bottom: 20px;
 }
 
-
 /* ====== CONTENIDO RUTAS ====== */
 
 .container {
-  max-width: 1200px;
-  margin: 3rem auto;
-  padding: 2rem;
-  animation: fadeIn 1s ease-in-out;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 2.5rem; /* Aumento de padding */
+    animation: fadeIn 1s ease-in-out;
+    backdrop-filter: blur(8px); /* Blur más pronunciado para el fondo */
+    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.75); /* Fondo blanco semitransparente para el contenedor principal */
+    border-radius: 20px; /* Bordes más redondeados */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Sombra más notable */
 }
 
-.container h2 {
-  text-align: center;
-  font-size: 2.5rem;
-  color: #2e7d32;
-  margin-bottom: 2.5rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+.section-title {
+    text-align: center;
+    font-size: 2.8rem; /* Tamaño de título de sección */
+    color: #2e7d32; /* Verde más oscuro para títulos */
+    margin-bottom: 3rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding-bottom: 15px;
 }
 
-/* ==== Ruta individual ==== */
-.ruta {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 2rem;
-  margin-bottom: 2.5rem;
-  border-radius: 16px;
-  border-left: 6px solid #43a047;
-  box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.08),
-    0 8px 20px rgba(76, 175, 80, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: fadeInUp 0.6s ease-out both;
-  backdrop-filter: blur(6px);
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #4CAF50; /* Línea decorativa debajo del título */
+    border-radius: 2px;
 }
 
-.ruta:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 6px 12px rgba(0, 0, 0, 0.1),
-    0 12px 24px rgba(76, 175, 80, 0.15);
+.section-description {
+    text-align: center;
+    font-size: 1.15rem;
+    color: #555;
+    margin-bottom: 2.5rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.ruta h3 {
-  margin: 0 0 1rem;
-  font-size: 1.75rem;
-  color: #2e7d32;
-  font-weight: 700;
-  line-height: 1.3;
+/* ==== Cuadrícula de Rutas ==== */
+.rutas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Columnas responsivas */
+    gap: 2.5rem; /* Espacio entre tarjetas */
+    margin-top: 3rem;
 }
 
-.ruta p {
-  margin: 0.5rem 0;
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: #2e7d32;
+/* ==== Ruta individual (Tarjeta) ==== */
+.ruta-card {
+    background: rgba(255, 255, 255, 0.95); /* Fondo casi opaco para la tarjeta */
+    border-radius: 18px; /* Bordes más redondeados */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Sombra más suave y extendida */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transición suave con curva */
+    animation: fadeInUp 0.7s ease-out forwards; /* Animación al cargar */
+    overflow: hidden; /* Asegura que la imagen no se desborde */
+    border: 1px solid rgba(220, 220, 220, 0.8); /* Borde sutil */
+    display: flex;
+    flex-direction: column;
+}
+
+.ruta-card:hover {
+    transform: translateY(-12px) scale(1.02); /* Se levanta más y crece ligeramente */
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25), /* Sombra principal más grande y oscura */
+                0 0 0 4px rgba(76, 175, 80, 0.3); /* Anillo de color verde sutil */
+}
+
+.ruta-image-container {
+    width: 100%;
+    height: 200px; /* Altura fija para las imágenes */
+    overflow: hidden;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+}
+
+.ruta-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cubre el área manteniendo la proporción */
+    transition: transform 0.5s ease; /* Transición más lenta para la imagen */
+}
+
+.ruta-card:hover .ruta-image {
+    transform: scale(1.08); /* Zoom sutil en la imagen al pasar el ratón, un poco más notorio */
+}
+
+/* El resto de tu CSS permanece igual */
+
+.ruta-info {
+    padding: 1.8rem; /* Relleno interno */
+    flex-grow: 1; /* Permite que la información ocupe el espacio restante */
+    display: flex;
+    flex-direction: column;
+}
+
+.ruta-card h3 {
+    margin: 0 0 1.2rem;
+    font-size: 1.8rem; /* Tamaño de título de ruta */
+    color: #1a5e20; /* Verde más oscuro para mayor impacto */
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.ruta-info p {
+    margin: 0.6rem 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #444; /* Color de texto más legible en las tarjetas */
+    display: flex;
+    align-items: center;
+}
+
+.ruta-info p strong {
+    color: #333;
+}
+
+.ruta-info p i {
+    color: #4CAF50; /* Color verde para los íconos */
+    margin-right: 10px; /* Espacio entre el ícono y el texto */
+    font-size: 1.15rem;
+}
+
+.ruta-description {
+    margin-top: 1rem;
+    font-size: 0.95rem !important; /* Más pequeño para descripciones */
+    color: #666 !important;
+    line-height: 1.5;
 }
 
 /* ==== Recomendaciones ==== */
 .recomendaciones {
-  background: linear-gradient(135deg, #e8f5e9, #f1fdf3);
-  padding: 2.5rem;
-  border-radius: 16px;
-  margin-top: 4rem;
-  border-left: 6px solid #66bb6a;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-  animation: fadeInUp 0.6s ease-out both;
+    background: linear-gradient(135deg, #e8f5e9, #dcedc8); /* Gradiente más suave */
+    padding: 3rem; /* Más padding */
+    border-radius: 20px;
+    margin-top: 5rem; /* Más espacio superior */
+    border-left: 8px solid #66bb6a; /* Borde más grueso */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.7s ease-out forwards;
 }
 
 .recomendaciones h2,
 .recomendaciones h3 {
-  color: #2e7d32;
-  font-size: 1.85rem;
-  margin-bottom: 1.25rem;
-  font-weight: 700;
+    color: #2e7d32;
+    font-size: 2rem; /* Tamaño de título para recomendaciones */
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    text-align: center; /* Centrar el título de recomendaciones */
 }
 
-.recomendaciones p {
-  font-size: 1.05rem;
-  margin-bottom: 1rem;
-  line-height: 1.7;
-  color: #2e7d32;
+.recomendaciones .section-description {
+    color: #444;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
 }
 
-.recomendaciones ul {
-  padding-left: 1.75rem;
-  list-style: disc;
+.recomendaciones-list {
+    padding-left: 0; /* Eliminar el padding por defecto del ul */
+    list-style: none; /* Eliminar viñetas por defecto */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Cuadrícula para ítems de lista */
+    gap: 1.2rem; /* Espacio entre ítems */
 }
 
 .recomendaciones li {
-  margin-bottom: 0.6rem;
-  line-height: 1.6;
-  font-size: 1.05rem;
-  color: #2e7d32;
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+    font-size: 1.05rem;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco ligero para cada ítem */
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
 }
 
-/* ==== Animaciones ==== */
-/* @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.recomendaciones li:hover {
+    background-color: rgba(255, 255, 255, 1);
+    transform: translateX(5px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-} */
+.recomendaciones li i {
+    color: #4CAF50; /* Color verde para los íconos de la lista */
+    margin-right: 12px;
+    font-size: 1.2rem;
+    min-width: 25px; /* Asegura un ancho mínimo para la alineación de íconos */
+    text-align: center;
+}
 
-/* ==== Responsive Premium ==== */
+/* ==== Responsive ==== */
+@media (max-width: 992px) {
+    .container {
+        padding: 2rem;
+        margin: 2rem auto;
+    }
+
+    .section-title {
+        font-size: 2.4rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .ruta-card h3 {
+        font-size: 1.6rem;
+    }
+
+    .ruta-image-container {
+        height: 180px;
+    }
+
+    .recomendaciones {
+        padding: 2.5rem;
+    }
+
+    .recomendaciones h2,
+    .recomendaciones h3 {
+        font-size: 1.8rem;
+    }
+
+    .recomendaciones-list {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
 @media (max-width: 768px) {
-  .container {
-    padding: 1.5rem;
-  }
+    h1 {
+        font-size: 2.8rem;
+    }
 
-  .container h2 {
-    font-size: 2rem;
-  }
+    p {
+        font-size: 1.1rem;
+    }
 
-  .ruta h3,
-  .recomendaciones h2,
-  .recomendaciones h3 {
-    font-size: 1.4rem;
-  }
+    .container {
+        padding: 1.5rem;
+        margin: 1.5rem auto;
+    }
 
-  .ruta,
-  .recomendaciones {
-    padding: 1.5rem;
-  }
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
 
-  .ruta p,
-  .recomendaciones p,
-  .recomendaciones li {
-    font-size: 0.98rem;
-  }
+    .section-description {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .rutas-grid {
+        gap: 1.8rem;
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    }
+
+    .ruta-card {
+        margin-bottom: 1.5rem;
+    }
+
+    .ruta-card h3 {
+        font-size: 1.45rem;
+    }
+
+    .ruta-info p {
+        font-size: 1rem;
+    }
+
+    .ruta-description {
+        font-size: 0.9rem !important;
+    }
+
+    .recomendaciones {
+        padding: 2rem;
+        margin-top: 3rem;
+    }
+
+    .recomendaciones h2,
+    .recomendaciones h3 {
+        font-size: 1.6rem;
+    }
+
+    .recomendaciones li {
+        font-size: 0.95rem;
+        padding: 0.7rem 1rem;
+    }
+
+    .recomendaciones li i {
+        font-size: 1.1rem;
+    }
 }
 
 @media (max-width: 480px) {
-  .container h2 {
-    font-size: 1.6rem;
-  }
+    h1 {
+        font-size: 2.2rem;
+    }
 
-  .ruta h3 {
-    font-size: 1.25rem;
-  }
+    .section-title {
+        font-size: 1.7rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .ruta-info {
+        padding: 1.2rem;
+    }
+
+    .ruta-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .ruta-info p {
+        font-size: 0.95rem;
+    }
+
+    .recomendaciones-list {
+        grid-template-columns: 1fr; /* Asegura una columna en móviles muy pequeños */
+    }
 }

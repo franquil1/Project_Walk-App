@@ -1,91 +1,41 @@
+/* === RESETEO GENERAL === */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
-}
-
-html, body {
-  width: 100%;
-  overflow-x: hidden;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  display: flex;
-  flex-direction: column;
-  animation: fadeIn 1s ease-in-out;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+  padding: 2rem;
 }
 
-body.fade-out {
-  animation: fadeOut 1s ease-in-out;
-}
-
-h1 {
-  color: #e3e0e0;
-  font-size: 50px;
-  margin-bottom: 20px;
-}
-
-p {
-  color: #fefefe;
-  font-size: 30px;
-  margin-bottom: 20px;
-}
-
-
-/* === CONTENIDO RANKING + ESTADÍSTICAS === */
+/* === CONTENEDOR PRINCIPAL === */
 .ranking-stats-wrapper {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 2.5rem;
-  padding: 4rem 2rem;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: auto;
 }
 
-/* === TARJETAS === */
-.ranking-container,
-.stats-container {
-  background-color: #ffffff;
-  border-radius: 20px;
-  padding: 2.5rem;
-  flex: 1 1 500px;
-  min-width: 300px;
-  max-width: 600px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* === SECCIONES === */
+section {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
 }
 
-.ranking-container:hover,
-.stats-container:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-}
-
-/* === TÍTULOS === */
-.ranking-container h2,
-.stats-container h2 {
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #1e88e5;
   text-align: center;
-  color: #2d6a4f;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1.8rem;
-  position: relative;
-}
-
-.ranking-container h2::after,
-.stats-container h2::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 3px;
-  background-color: #00ff37;
-  margin: 0.5rem auto 0;
-  border-radius: 2px;
 }
 
 /* === RANKING LIST === */
@@ -98,69 +48,103 @@ p {
 .ranking-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(90deg, #f1fdf6, #e0f7ec);
-  border-radius: 10px;
-  border: 1px solid #b7e4c7;
-  transition: all 0.25s ease-in-out;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #eee;
+  font-size: 1.1rem;
 }
 
-.ranking-item:hover {
-  background-color: #d8f3dc;
-  transform: scale(1.01);
+.ranking-item span:first-child {
+  font-weight: bold;
 }
 
-/* === TABLA === */
-.table-responsive {
+.ranking-item.gold {
+  background-color: #fff9c4;
+}
+
+.ranking-item.silver {
+  background-color: #e0e0e0;
+}
+
+.ranking-item.bronze {
+  background-color: #ffe0b2;
+}
+
+/* === ESTADÍSTICAS === */
+.stats-box {
   overflow-x: auto;
 }
 
-table {
+.stats-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem;
   margin-top: 1rem;
-  background-color: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
 }
 
-thead {
-  background-color: #b7e4c7;
-  color: #1b4332;
-  font-weight: 600;
-}
-
-th,
-td {
-  padding: 1rem;
+.stats-table th,
+.stats-table td {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
   text-align: center;
-  border-bottom: 1px solid #e5e7eb;
 }
 
-tbody tr:nth-child(even) {
-  background-color: #f1fdf6;
+.stats-table thead {
+  background-color: #f0f0f0;
 }
 
-tbody tr:hover {
-  background-color: #d8f3dc;
-  transition: background-color 0.3s ease-in-out;
+.badge {
+  background-color: #42a5f5;
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 8px;
+  font-weight: bold;
 }
 
-/* === RESPONSIVO === */
+/* === CAMINATAS RECIENTES === */
+.hikes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.hike-card {
+  background-color: #fafafa;
+  border-left: 5px solid #1e88e5;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+
+.hike-card:hover {
+  transform: scale(1.02);
+}
+
+.hike-title {
+  font-size: 1.2rem;
+  color: #1e88e5;
+  margin-bottom: 0.5rem;
+}
+
+.hike-tag {
+  display: inline-block;
+  margin-top: 0.8rem;
+  background-color: #e3f2fd;
+  color: #1565c0;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+/* === ANIMACIONES RESPONSIVAS === */
 @media (max-width: 768px) {
-  .ranking-stats-wrapper {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 2rem 1rem;
+  .ranking-item,
+  .stats-table th,
+  .stats-table td {
+    font-size: 0.95rem;
   }
 
-  .ranking-container,
-  .stats-container {
-    flex: 1 1 100%;
-    max-width: 100%;
-    padding: 2rem;
+  .section-title {
+    font-size: 1.5rem;
   }
 }

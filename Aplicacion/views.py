@@ -1,9 +1,15 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import render,  get_object_or_404
 from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .forms import RegistroUsuarioForms, LoginForm
+from .models import Ruta
+from .forms import RutaForm 
+from django.contrib.auth.decorators import login_required 
+from .models import Ruta, Usuario, UserRutaFavorita
+
 
 
 # VISTAS GENERALES =============================================
@@ -159,3 +165,76 @@ def logout_usuario(request):
     logout(request)
     messages.info(request, 'Has cerrado sesión correctamente.')
     return redirect('mi_app_registro:login')
+
+# ==== MOSTRAR RUTAS A LOS USUARIOS =====
+
+def lista_rutas(request):
+    # Obtiene todas las rutas de la base de datos
+    rutas = Ruta.objects.all().order_by('nombre_ruta')
+    # Pasa las rutas al contexto para que estén disponibles en la plantilla
+    return render(request, 'Aplicacion/rutas.html', {'rutas': rutas})
+
+# Vista para la lista de rutas
+def lista_rutas(request):
+    rutas = Ruta.objects.all().order_by('nombre_ruta')
+    # Ajusta la ruta de la plantilla
+    return render(request, 'html/rutas/rutas.html', {'rutas': rutas}) 
+    # Usamos 'rutas.html' si esa es la que quieres para la lista general de rutas
+
+# Vista para los detalles de una ruta específica
+def detalle_ruta(request, ruta_id):
+    ruta = get_object_or_404(Ruta, pk=ruta_id)
+    # Ajusta la ruta de la plantilla. Podrías crear una específica como 'detalle_ruta.html'
+    # o usar una de las existentes si se adapta (ej. 'vista-morro.html' si es para ese tipo de detalle)
+    return render(request, 'html/rutas/detalle_ruta.html', {'ruta': ruta}) 
+    # Aquí asumo que crearás 'detalle_ruta.html' o usarás una existente con adaptación
+
+# Vista para crear una nueva ruta
+def crear_ruta(request):
+    if request.method == 'POST':
+        form = RutaForm(request.POST)
+        if form.is_valid():
+            nueva_ruta = form.save(commit=False)
+            # Aquí, si tienes un usuario logeado, lo asignarías
+            # if request.user.is_authenticated:
+            #     # Asumiendo que request.user es una instancia de Usuario (o lo mapeas)
+            #     nueva_ruta.creada_por = Usuario.objects.get(nombre_usuario=request.user.username) 
+            #     # O de forma más robusta:
+            #     # if hasattr(request.user, 'usuario_profile'): # Si tienes un OneToOneField de User a Usuario
+            #     #     nueva_ruta.creada_por = request.user.usuario_profile
+            #     # else: # Si request.user es directamente tu modelo Usuario (menos común si usas el auth de Django)
+            #     #     nueva_ruta.creada_por = request.user
+            #     # O simplemente si siempre la va a crear un usuario existente:
+            #     # nueva_ruta.creada_por = Usuario.objects.get(pk=ID_DEL_USUARIO_QUE_CREA) 
+            nueva_ruta.save()
+            return redirect('lista_rutas')
+    else:
+        form = RutaForm()
+    # Ajusta la ruta de la plantilla. Podrías crear una específica para el formulario
+    return render(request, 'html/rutas/crear_ruta.html', {'form': form}) 
+
+
+# Vistas para marcar/desmarcar como favorita
+# Recuerda que necesitas una forma de obtener el ID del Usuario logeado.
+# Si estás usando el sistema de autenticación de Django y tu modelo Usuario está relacionado
+# con User de Django, necesitarás ajustar cómo obtienes el objeto Usuario del usuario logeado.
+# Por simplicidad, aquí sigo pasando 'usuario_id', pero idealmente lo sacarías de request.user
+def marcar_favorita(request, ruta_id, usuario_id):
+    ruta = get_object_or_404(Ruta, pk=ruta_id)
+    usuario = get_object_or_404(Usuario, pk=usuario_id) # O mejor: obtener del usuario logeado
+
+    if not UserRutaFavorita.objects.filter(usuario=usuario, ruta=ruta).exists():
+        UserRutaFavorita.objects.create(usuario=usuario, ruta=ruta)
+        # Aquí puedes añadir un mensaje de éxito con django.contrib.messages
+    
+    # Redirige de vuelta a la página de detalle de la ruta
+    return redirect('detalle_ruta', ruta_id=ruta.id) 
+
+def quitar_favorita(request, ruta_id, usuario_id):
+    ruta = get_object_or_404(Ruta, pk=ruta_id)
+    usuario = get_object_or_404(Usuario, pk=usuario_id) # O mejor: obtener del usuario logeado
+    
+    UserRutaFavorita.objects.filter(usuario=usuario, ruta=ruta).delete()
+    # Aquí puedes añadir un mensaje de éxito
+    
+    return redirect('detalle_ruta', ruta_id=ruta.id)

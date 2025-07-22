@@ -26,7 +26,7 @@ urlpatterns = [
     
     path('', views.mostrarHome, name='home'),
     path('comunidad/', views.mostrarComunidad, name='comunidad'),
-    path('rutas/', views.mostrarRutas, name='rutas'),
+    path('rutas/', views.mostrarRutas, name='rutas'), 
     path('juegos/', views.mostrarJuegos, name='juegos'),
     path('ranking/', views.mostrarRanking, name='ranking'),
     path('registro/', views.registro_usuario, name='registro'),

@@ -1,5 +1,7 @@
 from django import forms
 from .models import Usuario
+from .models import Ruta
+
 
 class RegistroUsuarioForms(forms.ModelForm):
     contraseña2 = forms.CharField(label = 'Confirmar contraseña', widget= forms.PasswordInput)
@@ -25,3 +27,15 @@ class RegistroUsuarioForms(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(label='Nombre de usuario', max_length=100)
     password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
+
+# creacion de la ruta 
+
+class RutaForm(forms.ModelForm):
+    class Meta:
+        model = Ruta
+        fields = ['nombre_ruta', 'descripcion', 'longitud', 'dificultad', 
+                  'duracion_estimada', 'altitud_maxima', 'ubicacion', 
+                  'puntos_interes', 'coordenadas_inicio_lat', 'coordenadas_inicio_lon',
+                  'coordenadas_fin_lat', 'coordenadas_fin_lon']
+        # No incluyas 'creada_por', 'fecha_creacion' ni 'usuarios_favoritos' aquí,
+        # ya que se gestionan automáticamente o en la vista.

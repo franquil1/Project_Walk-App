@@ -24,13 +24,12 @@
     <div class="nav-right">
       <form class="nav-search">
         <div class="input-container">
-          <input type="text" placeholder="Buscar" class="nav-input" />
           <button type="submit" class="nav-icon-button" aria-label="Buscar">
             <i class="fas fa-search"></i>
           </button>
         </div>
       </form>
-      <a href="{% url 'login' %}" class="btn-login">Iniciar sesión</a>
+      <a href="{% url 'login' %}" class="btn-login"><img src="{% static 'images/home_imgs/usuario.png' %}" alt=""></a>
     </div>
 
     <!-- Botón menú hamburguesa -->
@@ -67,14 +66,5 @@
     </form>
   </div>
 
-<!-- ========= BIENVENIDA ========= -->
-<div class="bienvenida">
-  <h1 class="text-center">
-    {{ titulo_bienvenida|default:"Bienvenido a WALK APP" }}
-  </h1>
-  <p class="text-center">
-    {{ descripcion_bienvenida|default:"¡Cada paso cuenta!" }}
-  </p>
-</div>
 
 </header>
