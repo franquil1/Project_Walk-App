@@ -7,81 +7,116 @@
 
 {% block content %}
 
-<!-- ========= CONTENIDO PRINCIPAL ========= -->
-  <div class="container-fluid mt-4">
-    <div class="row">
+ <section class="comunidad-section">
+    <h2 class="titulo">Comunidad</h2>
+    <div class="cards-container">
+
+      <div class="card">
+        <div class="card-header">
+          <img src="{% static 'images/comunidad/melqui.jpg' %}" alt="usuario">
+          <h3>Melquicedec Mercado</h3>
+        </div>
+        <div class="card-body">
+          <img src="{% static 'images/el morro/el_morro.jpg' %}" alt="Caminata">
+          <div class="info">
+            <h4>Ruta: El Morro </h4>
+            <p>“Un Día de Paz y Naturaleza. ¡Súper Recomendado!”</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span><i class="fa-solid fa-shoe-prints"></i> 5 Caminatas</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <img src="{% static 'images/comunidad/benavidez.jpg' %}" alt="usuario">
+          <h3>Ronal Banavidez</h3>
+        </div>
+        <div class="card-body">
+          <img src="{% static 'images/torre24/torre.jpg' %}" alt="Caminata">
+          <div class="info">
+            <h4>Ruta: Parque Principal(Torre del Reloj)</h4>
+            <p>“Expeiencia Inolvidable ”</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span><i class="fa-solid fa-shoe-prints"></i> 7 Caminatas</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <img src="{% static 'images/comunidad/kevin.jpg' %}" alt="usuario">
+          <h3>Kevin Chikaiza </h3>
+        </div>
+        <div class="card-body">
+          <img src="{% static 'images/tres cruces/cerro.jpg' %}" alt="Caminata">
+          <div class="info">
+            <h4>Ruta: Tres Cruces</h4>
+            <p>“Un Reto Mas Cumplido”</p>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <span><i class="fa-solid fa-shoe-prints"></i> 2 Caminatas</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <img src="{% static 'images/comunidad/Kevin.png' %}" alt="usuario">
+          <h3>Cristian Garzon  </h3>
+        </div>
+        <div class="card-body">
+          <img src="{% static 'images/torre24/puente.jpeg' %}" alt="Caminata">
+          <div class="info">
+            <h4>Ruta: Puente el humilladero</h4>
+            <p>“Meta Cumplida”</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span><i class="fa-solid fa-shoe-prints"></i> 5 Caminatas</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <img src="{% static 'images/comunidad/Kevin.png' %}" alt="usuario">
+          <h3>Juan Garcia  </h3>
+        </div>
+        <div class="card-body">
+          <img src="{% static 'images/torre24/OIP.jpeg' %}" alt="Caminata">
+          <div class="info">
+            <h4>Ruta: Centro</h4>
+            <p>“Conoci Mejor la Ciudad”</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span><i class="fa-solid fa-shoe-prints"></i> 6 Caminatas</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <img src="{% static 'images/comunidad/Kevin.png' %}" alt="usuario">
+          <h3>Julian Espinoza  </h3>
+        </div>
+        <div class="card-body">
+          <img src="{% static 'images/imagenes/iglesia.jpg' %}" alt="Caminata">
+          <div class="info">
+            <h4>Ruta: Iglesia</h4>
+            <p>“Monumento Extraurdinario”</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span><i class="fa-solid fa-shoe-prints"></i> 2 Caminatas</span>
+        </div>
+      </div>
+
       
-      <!-- Publicaciones -->
-      <div class="col-lg-8">
-        <h2 class="mb-4">Últimos en <span class="text-success">Colombia</span></h2>
 
-        <!-- Publicación 1 -->
-        <div class="post-card p-3">
-          <div class="d-flex align-items-center mb-2">
-            <img src="{% static '/images/iconos/avatar1.png' %}" alt="User" class="profile-pic me-2">
-            <strong>Sara Mejía</strong>
-          </div>
-          <img src="{% static '/images/imagenes/cocora1.jpg' %}" alt="Valle Cocora" class="img-fluid rounded mb-3">
-          <h5>🌿 Aven0tura Valle de Cocora - Salento Loop</h5>
-          <p class="text-muted">Salento, Quindío, Colombia</p>
-          <p class="mb-2">Un recorrido lleno de palmas de cera, aire puro y vistas únicas. ¡Imperdible para los senderistas!</p>
-          <div class="d-flex justify-content-between">
-            <div>
-              <i class="fas fa-thumbs-up me-1"></i> 24
-              <i class="fas fa-comment ms-3 me-1"></i> 8
-            </div>
-            <div>
-              <i class="fas fa-star text-warning"></i> 4.8
-            </div>
-          </div>
-        </div>
-
-        <!-- Publicación 2 -->
-        <div class="post-card p-3">
-          <div class="d-flex align-items-center mb-2">
-            <img src="{% static '/images/iconos/avatar1.png' %}" alt="User" class="profile-pic me-2">
-            <strong>Santiago Trujillo</strong>
-          </div>
-          <img src="{% static '/images/imagenes/elvalledelcocora.jpg' %}" alt="Valle Cocora 2" class="img-fluid rounded mb-3">
-          <h5>🌄 Cocora Trail – Belleza del corazón del Quindío</h5>
-          <p class="text-muted">Valle del Cocora, Colombia</p>
-          <p class="mb-2">Travesía ideal de un día, con más de 2.400m de altura y paisajes inigualables. Muy recomendado para senderistas moderados.</p>
-          <div class="d-flex justify-content-between">
-            <div>
-              <i class="fas fa-thumbs-up me-1"></i> 31
-              <i class="fas fa-comment ms-3 me-1"></i> 12
-            </div>
-            <div>
-              <i class="fas fa-star text-warning"></i> 4.6
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sidebar -->
-      <div class="col-lg-4">
-        <div class="sidebar p-3 bg-white rounded shadow-sm">
-          <h5>🔗 Conecta</h5>
-          <input type="text" class="form-control mb-3" placeholder="Buscar senderistas">
-          <h6>Miembros sugeridos</h6>
-          <ul class="list-unstyled">
-            <li class="d-flex align-items-center mb-2">
-              <img src="{% static '/images/iconos/avatar1.png' %}" class="member-avatar me-2" alt="Miembro">
-              <span>Laura Gómez</span>
-            </li>
-            <li class="d-flex align-items-center mb-2">
-              <img src="{% static '/images/iconos/avatar1.png' %}" class="member-avatar me-2" alt="Miembro">
-              <span>Juan Ríos</span>
-            </li>
-            <li class="d-flex align-items-center mb-2">
-              <img src="{% static '/images/iconos/avatar1.png' %}" class="member-avatar me-2" alt="Miembro">
-              <span>Camila Pérez</span>
-            </li>
-          </ul>
-          <button class="btn btn-outline-primary btn-sm w-100 mt-3">Ver todos</button>
-        </div>
-      </div>
     </div>
-  </div>
+  </section>
 
   {% endblock %}
