@@ -1,16 +1,15 @@
 /* === RESETEO GENERAL === */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
+
 
 body {
-  background-color: #f4f4f4;
-  color: #333;
-  line-height: 1.6;
-  padding: 2rem;
+  padding-top: 90px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+    line-height: 1.6;
+    animation: fadeIn 1s ease-in-out;
 }
 
 /* === CONTENEDOR PRINCIPAL === */
