@@ -491,7 +491,7 @@ a:hover {
 
 /* ========== LLAMADAS A LA ACCION FINAL ========== */
 .cta-section {
-    background: linear-gradient(to right, #00cc2e, #00ff37);
+    background: linear-gradient(to right, #266d37, #266d37);
     color: white;
     padding: 100px 0;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
