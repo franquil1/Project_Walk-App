@@ -1,4 +1,9 @@
  body {
+  background-image: url(../images/fotos/Wallpaper_Rutas.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f4f8f5;
       margin: 0;

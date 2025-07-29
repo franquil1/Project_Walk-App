@@ -1,0 +1,244 @@
+/* Variables para colores */
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #FFC107;
+    --text-color: #333;
+    --background-color: #f4f4f4;
+    --card-background: #ffffff;
+    --border-color: #ddd;
+    --link-color: #007bff;
+    --link-hover-color: #0056b3;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.container {
+    background: var(--card-background);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form p {
+    margin: 0;
+}
+
+form label {
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    display: block;
+}
+
+form input[type="text"],
+form textarea,
+form select {
+    width: calc(100% - 20px);
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form textarea:focus,
+form select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    outline: none;
+}
+
+button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    align-self: flex-start;
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+p {
+    margin-top: 20px;
+    text-align: center;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    background: var(--card-background);
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 5px solid var(--primary-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+li a {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: var(--text-color);
+    margin-right: 15px;
+}
+
+li a:hover {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+p strong {
+    color: var(--primary-color);
+}
+
+/* Estilos específicos para la página de detalles */
+body h1.detail-title {
+    color: var(--primary-color);
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.detail-info {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.detail-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.detail-actions a {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.detail-actions a:hover {
+    background-color: #e6b000;
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+.detail-actions a:first-child {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.detail-actions a:first-child:hover {
+    background-color: #45a049;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 25px;
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        text-align: center;
+        align-self: center;
+    }
+
+    .detail-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .detail-actions a {
+        width: 80%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+    }
+
+    form input[type="text"],
+    form textarea,
+    form select {
+        width: calc(100% - 10px);
+        padding: 10px;
+    }
+}

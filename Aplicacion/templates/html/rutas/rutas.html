@@ -1,14 +1,17 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Lista de Rutas de Senderismo</title>
+    <link rel="stylesheet" href="{% static 'css/rutas/creacio.css' %}">
 </head>
 <body>
     <h1>Nuestras Rutas de Senderismo</h1>
     <ul>
         {% for ruta in rutas %}
             <li>
-                <a href="{% url 'detalle_ruta' ruta.id %}">{{ ruta.nombre_ruta }}</a> - Dificultad: {{ ruta.dificultad }}
+                <a href="{% url 'mi_app_registro:detalle_ruta' ruta.id %}">{{ ruta.nombre_ruta }}</a> - Dificultad: {{ ruta.dificultad }}
             </li>
         {% empty %}
             <li>No hay rutas disponibles para mostrar.</li>

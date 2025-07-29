@@ -11,11 +11,11 @@ html, body {
 }
 
 body {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  display: flex;
+    background-image: url(../images/fotos/Wallpaper_Rutas.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   flex-direction: column;
   animation: fadeIn 1s ease-in-out;
 }

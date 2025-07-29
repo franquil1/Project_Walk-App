@@ -1,13 +1,10 @@
 /* Fondo de la página */
 body {
-    background-color: #eafaf1;
-    font-family: Arial, sans-serif;
-    background-image:url(../../images/imagenes/shutterstock_208356901_.jpg);
+    background-image: url(../../images/imagenes/shutterstock_208356901_.jpg);
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
-    margin: 0;
-    padding: 0;
+    background-attachment: fixed;
 }
 img{
     height: 90px;

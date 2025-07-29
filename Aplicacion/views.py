@@ -30,7 +30,7 @@ def mostrarRutas(request):
     })
 
 def mostrarJuegos(request):
-    return render(request, 'html/juegos/juegos.html', {
+    return render(request, 'html/juegos/trivia/index.html', {
         'titulo_bienvenida': 'JUEGOS',
         'descripcion_bienvenida': 'Diviértete con nuestros juegos interactivos de senderismo.',
     })
@@ -177,17 +177,12 @@ def lista_rutas(request):
 # Vista para la lista de rutas
 def lista_rutas(request):
     rutas = Ruta.objects.all().order_by('nombre_ruta')
-    # Ajusta la ruta de la plantilla
     return render(request, 'html/rutas/rutas.html', {'rutas': rutas}) 
-    # Usamos 'rutas.html' si esa es la que quieres para la lista general de rutas
 
 # Vista para los detalles de una ruta específica
 def detalle_ruta(request, ruta_id):
     ruta = get_object_or_404(Ruta, pk=ruta_id)
-    # Ajusta la ruta de la plantilla. Podrías crear una específica como 'detalle_ruta.html'
-    # o usar una de las existentes si se adapta (ej. 'vista-morro.html' si es para ese tipo de detalle)
     return render(request, 'html/rutas/detalle_ruta.html', {'ruta': ruta}) 
-    # Aquí asumo que crearás 'detalle_ruta.html' o usarás una existente con adaptación
 
 # Vista para crear una nueva ruta
 def crear_ruta(request):
@@ -195,7 +190,6 @@ def crear_ruta(request):
         form = RutaForm(request.POST)
         if form.is_valid():
             nueva_ruta = form.save(commit=False)
-            # Aquí, si tienes un usuario logeado, lo asignarías
             # if request.user.is_authenticated:
             #     # Asumiendo que request.user es una instancia de Usuario (o lo mapeas)
             #     nueva_ruta.creada_por = Usuario.objects.get(nombre_usuario=request.user.username) 
@@ -207,7 +201,7 @@ def crear_ruta(request):
             #     # O simplemente si siempre la va a crear un usuario existente:
             #     # nueva_ruta.creada_por = Usuario.objects.get(pk=ID_DEL_USUARIO_QUE_CREA) 
             nueva_ruta.save()
-            return redirect('lista_rutas')
+            return redirect('rutas')
     else:
         form = RutaForm()
     # Ajusta la ruta de la plantilla. Podrías crear una específica para el formulario
@@ -215,26 +209,20 @@ def crear_ruta(request):
 
 
 # Vistas para marcar/desmarcar como favorita
-# Recuerda que necesitas una forma de obtener el ID del Usuario logeado.
-# Si estás usando el sistema de autenticación de Django y tu modelo Usuario está relacionado
-# con User de Django, necesitarás ajustar cómo obtienes el objeto Usuario del usuario logeado.
-# Por simplicidad, aquí sigo pasando 'usuario_id', pero idealmente lo sacarías de request.user
 def marcar_favorita(request, ruta_id, usuario_id):
     ruta = get_object_or_404(Ruta, pk=ruta_id)
-    usuario = get_object_or_404(Usuario, pk=usuario_id) # O mejor: obtener del usuario logeado
+    usuario = get_object_or_404(Usuario, pk=usuario_id)
 
     if not UserRutaFavorita.objects.filter(usuario=usuario, ruta=ruta).exists():
         UserRutaFavorita.objects.create(usuario=usuario, ruta=ruta)
-        # Aquí puedes añadir un mensaje de éxito con django.contrib.messages
     
     # Redirige de vuelta a la página de detalle de la ruta
     return redirect('detalle_ruta', ruta_id=ruta.id) 
 
 def quitar_favorita(request, ruta_id, usuario_id):
     ruta = get_object_or_404(Ruta, pk=ruta_id)
-    usuario = get_object_or_404(Usuario, pk=usuario_id) # O mejor: obtener del usuario logeado
+    usuario = get_object_or_404(Usuario, pk=usuario_id)
     
     UserRutaFavorita.objects.filter(usuario=usuario, ruta=ruta).delete()
-    # Aquí puedes añadir un mensaje de éxito
     
     return redirect('detalle_ruta', ruta_id=ruta.id)

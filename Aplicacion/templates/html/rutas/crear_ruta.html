@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear Nueva Ruta</title>
+    <link rel="stylesheet" href="{% static 'css/rutas/creacio.css' %}">
+</head>
+<body>
+    <h1>Crear Nueva Ruta</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar Ruta</button>
+    </form>
+    <p><a href="{% url 'rutas' %}">Cancelar</a></p>
+</body>
+</html>

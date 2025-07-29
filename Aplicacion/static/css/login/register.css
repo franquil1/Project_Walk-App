@@ -1,12 +1,10 @@
 /* Fondo de la página */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background:url(../../images/imagenes/shutterstock_208356901_.jpg);
+    background-image:url(../../images/imagenes/shutterstock_208356901_.jpg) ;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-attachment: fixed;
 }
 
 img{
