@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+:root {
+    /* Definición de variables CSS para colores */
+    --color-primary: #4CAF50; /* Verde vibrante */
+    --color-secondary: #8BC34A; /* Verde más suave */
+    --color-text-dark: #333; /* Texto oscuro */
+    --color-text-light: #666; /* Texto claro */
+    --color-background-light: #F8F8F8; /* Fondo muy claro */
+    --color-background-card: #FFFFFF; /* Fondo de tarjeta blanco */
+    --color-border: #E0E0E0; /* Borde suave */
+    --color-link: #2196F3; /* Azul para enlaces */
+    --color-link-hover: #1976D2; /* Azul más oscuro al pasar el ratón */
+    --color-button-submit: #4CAF50; /* Verde para botón de envío */
+    --color-button-submit-hover: #43A047; /* Verde más oscuro para hover */
+    --color-button-cancel: #F44336; /* Rojo para botón de cancelar */
+    --color-button-cancel-hover: #D32F2F; /* Rojo más oscuro para hover */
+    --color-button-favorite: #FFC107; /* Amarillo para favorita */
+    --color-button-favorite-hover: #FFB300; /* Amarillo más oscuro */
+    --color-button-unfavorite: #9E9E9E; /* Gris para quitar de favorita */
+    --color-button-unfavorite-hover: #757575; /* Gris más oscuro */
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--color-background-light);
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.8em;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+
+/* --- Contenedor principal para los detalles de la ruta --- */
+.route-details-container {
+    background-color: var(--color-background-card);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 700px; /* Ancho máximo para el contenido */
+    margin-bottom: 30px;
+    text-align: left; /* Alinea el texto a la izquierda dentro del contenedor */
+}
+
+.route-details-container p {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    color: var(--color-text-dark);
+}
+
+.route-details-container p strong {
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-right: 5px;
+}
+
+/* Estilo específico para la descripción, si quieres que se destaque más */
+.route-details-container p:first-of-type { /* Asume que la descripción es el primer párrafo */
+    font-size: 1.2em;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    color: var(--color-text-light);
+}
+
+/* --- Estilos para los botones de Marcar/Quitar Favorita --- */
+.route-details-container p:last-of-type:not(.back-link) { /* Selecciona el penúltimo párrafo que contiene los botones */
+    display: flex; /* Para poner los botones en línea */
+    gap: 15px; /* Espacio entre los botones */
+    justify-content: center; /* Centrar los botones */
+    margin-top: 30px;
+    flex-wrap: wrap; /* Permite que los botones se envuelvan en pantallas pequeñas */
+}
+
+.route-details-container p a {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap; /* Evita que el texto de los botones se rompa */
+}
+
+/* Estilo para el botón "Marcar como Favorita" */
+.route-details-container p a[href*="marcar_favorita"] {
+    background-color: var(--color-button-favorite);
+    color: var(--color-text-dark); /* Color de texto más oscuro para contraste con el amarillo */
+}
+
+.route-details-container p a[href*="marcar_favorita"]:hover {
+    background-color: var(--color-button-favorite-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo para el botón "Quitar de Favoritas" */
+.route-details-container p a[href*="quitar_favorita"] {
+    background-color: var(--color-button-unfavorite);
+    color: white;
+}
+
+.route-details-container p a[href*="quitar_favorita"]:hover {
+    background-color: var(--color-button-unfavorite-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Estilo para el enlace "Volver a la Lista de Rutas" --- */
+p.back-link { /* Agrega una clase al párrafo del enlace para distinguirlo */
+    text-align: center;
+    margin-top: 30px;
+}
+
+p.back-link a {
+    display: inline-block;
+    background-color: var(--color-link); /* Azul para volver */
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+p.back-link a:hover {
+    background-color: var(--color-link-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* --- Media Queries para Responsividad --- */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.2em;
+        margin-bottom: 30px;
+    }
+
+    .route-details-container {
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .route-details-container p {
+        font-size: 1em;
+    }
+
+    .route-details-container p:first-of-type {
+        font-size: 1.1em;
+        margin-bottom: 20px;
+    }
+
+    .route-details-container p:last-of-type:not(.back-link) {
+        flex-direction: column; /* Apila los botones en pantallas pequeñas */
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+    .route-details-container p a {
+        width: 100%; /* Botones de ancho completo */
+        text-align: center;
+        padding: 10px 15px;
+        font-size: 0.95em;
+    }
+
+    p.back-link a {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .route-details-container {
+        padding: 15px;
+    }
+
+    .route-details-container p {
+        font-size: 0.95em;
+        margin-bottom: 10px;
+    }
+
+    .route-details-container p:first-of-type {
+        font-size: 1em;
+        margin-bottom: 15px;
+    }
+}

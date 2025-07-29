@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'Aplicacion',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -53,6 +54,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'Proyecto.urls'
 
 import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 TEMPLATES = [
     {
@@ -88,6 +92,14 @@ DATABASES = {
 
     
 # Password validation
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'              # Servidor SMTP de Gmail
+EMAIL_PORT = 587                           # Puerto para TLS
+EMAIL_USE_TLS = True                       # Usa TLS (no SSL)
+EMAIL_HOST_USER = 'sanchezfranquil93@gmail.com'     # Tu correo de envío
+EMAIL_HOST_PASSWORD = 'hjmw jwkv kpti zrdy'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [

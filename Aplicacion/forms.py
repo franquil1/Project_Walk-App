@@ -10,7 +10,7 @@ class RegistroUsuarioForms(forms.ModelForm):
         model = Usuario
         fields = ['nombre_usuario', 'correo_electronico', 'contraseña']
         widgets = {
-            'constraseña': forms.PasswordInput(),
+            'contraseña': forms.PasswordInput(),
         }
 
     def clean(self):
@@ -33,7 +33,7 @@ class LoginForm(forms.Form):
 class RutaForm(forms.ModelForm):
     class Meta:
         model = Ruta
-        fields = ['nombre_ruta', 'descripcion', 'longitud', 'dificultad', 
+        fields = ['nombre_ruta', 'descripcion', 'longitud','imagen', 'dificultad', 
                   'duracion_estimada', 'altitud_maxima', 'ubicacion', 
                   'puntos_interes', 'coordenadas_inicio_lat', 'coordenadas_inicio_lon',
                   'coordenadas_fin_lat', 'coordenadas_fin_lon']

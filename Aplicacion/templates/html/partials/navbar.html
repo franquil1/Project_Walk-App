@@ -15,7 +15,7 @@
         <li><a href="{% url 'home' %}">Inicio</a></li>
         <li><a href="{% url 'comunidad' %}">Comunidad</a></li>
         <li><a href="{% url 'juegos' %}">Juegos</a></li>
-        <li><a href="{% url 'rutas' %}">Rutas</a></li>
+        <li><a href="{% url 'mi_app_registro:rutas' %}">Rutas</a></li>
         <li><a href="{% url 'ranking' %}">Ranking</a></li>
       </ul>
     </div>
@@ -29,7 +29,8 @@
           </button>
         </div>
       </form>
-      <a href="{% url 'login' %}" class="btn-login"><img src="{% static 'images/home_imgs/usuario.png' %}" alt=""></a>
+      <a href="{% url 'registro' %}" class="btn-login">registrarce</a>
+      <a href="{% url 'login' %}" class="btn-login">iniciar sesion</a>
     </div>
 
     <!-- Botón menú hamburguesa -->
@@ -50,7 +51,7 @@
       <a href="{% url 'home' %}">Inicio</a>
       <a href="{% url 'comunidad' %}">Comunidad</a>
       <a href="{% url 'juegos' %}">Juegos</a>
-      <a href="{% url 'rutas' %}">Rutas</a>
+      <a href="{% url 'mi_app_registro:rutas' %}">Rutas</a>
       <a href="{% url 'ranking' %}">Ranking</a>
 
     <!-- loging -->

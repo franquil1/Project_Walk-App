@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Detalles de {{ ruta.nombre_ruta }}</title>
-    <link rel="stylesheet" href="{% static 'css/rutas/creacio.css' %}">
+    <link rel="stylesheet" href="{% static 'css/rutas/detalle.css' %}">
 </head>
 <body>
     <h1>{{ ruta.nombre_ruta }}</h1>
@@ -17,6 +17,6 @@
         <a href="{% url 'mi_app_registro:quitar_favorita' ruta.id 1 %}">Quitar de Favoritas</a>
     </p>
 
-    <p><a href="{% url 'rutas' %}">Volver a la Lista de Rutas</a></p>
+    <p><a href="{% url 'mi_app_registro:rutas' %}">Volver a la Lista de Rutas</a></p>
 </body>
 </html>

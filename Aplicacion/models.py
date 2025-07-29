@@ -6,6 +6,7 @@ class Usuario(models.Model):
     nombre_usuario = models.CharField(max_length=100, unique=True)
     correo_electronico = models.EmailField(unique=True)
     contraseña = models.CharField(max_length=128)
+    contraseña2 = models.CharField(max_length=128,blank=True, null=True)
 
     def __str__(self):
         return self.nombre_usuario
@@ -16,6 +17,7 @@ class Usuario(models.Model):
 class Ruta(models.Model):
     nombre_ruta = models.CharField(max_length=255, verbose_name="Nombre de la Ruta")
     descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")
+    imagen = models.ImageField(upload_to='rutas_imagenes/', blank=True, null=True)
     longitud = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Longitud (km)")
     dificultad_choices = [
         ('FACIL', 'Fácil'),
@@ -34,14 +36,10 @@ class Ruta(models.Model):
     coordenadas_fin_lon = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name="Longitud de Fin")
     
     # Relación Uno a Muchos: Una ruta es creada por un Usuario.
-    # Si eliminas un Usuario, sus rutas creadas se establecerán a NULL en este campo.
     creada_por = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True, blank=True, related_name='rutas_creadas', verbose_name="Creada por")
     
     fecha_creacion = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de Creación")
 
-    # Relación Muchos a Muchos: Usuarios pueden marcar rutas como favoritas.
-    # Usamos un modelo 'through' explícito para poder añadir campos adicionales a la relación 
-    # (como la fecha en que se añadió a favoritos).
     usuarios_favoritos = models.ManyToManyField(Usuario, through='UserRutaFavorita', related_name='rutas_favoritas', verbose_name="Marcada como Favorita por")
 
     class Meta:

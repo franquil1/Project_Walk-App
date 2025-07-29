@@ -1,16 +1,14 @@
-from django.shortcuts import render, redirect
-from django.shortcuts import render,  get_object_or_404
-from django.contrib.auth.hashers import make_password
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .forms import RegistroUsuarioForms, LoginForm
-from .models import Ruta
-from .forms import RutaForm 
-from django.contrib.auth.decorators import login_required 
+from .forms import RegistroUsuarioForms, LoginForm, RutaForm
 from .models import Ruta, Usuario, UserRutaFavorita
-
-
+from .utils import account_activation_token 
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
 
 # VISTAS GENERALES =============================================
 
@@ -35,15 +33,13 @@ def mostrarJuegos(request):
         'descripcion_bienvenida': 'Diviértete con nuestros juegos interactivos de senderismo.',
     })
 
-
 def mostrarRanking(request):
     return render(request, 'html/ranking.html', {
         'titulo_bienvenida': 'RANKING',
         'descripcion_bienvenida': 'Celebra tus logros, escala posiciones y demuestra que cada paso vale.',
     })
 
-
-# VISTAS - RUTAS    =============================================
+# VISTAS RUTAS =============================================
 
 def mostrarMorro(request):
     return render(request, 'html/rutas/vista-morro.html', {
@@ -58,81 +54,111 @@ def mostrarCruces(request):
     })
 
 def mostrarTorre24(request):
-    return render(request, 'html/rutas/torre_24.html',{
-        'titulo_bienvenida':'Torre 24',
-        'descripcion_bienvenida':'RUTAS - WALK APP',
+    return render(request, 'html/rutas/torre_24.html', {
+        'titulo_bienvenida': 'Torre 24',
+        'descripcion_bienvenida': 'RUTAS - WALK APP',
     })
-# ACCOUNT (CUENTA)  =============================================
 
-# none
+# LOGIN Y CUENTA =============================================
+
 def mostrarLogin(request):
     return render(request, 'login/index.html')
 
-
-# perfil
 def mostrarLogin2(request):
     return render(request, 'login/mi_perfil.html')
 
-# contrasena
 def mostrarLogin3(request):
     return render(request, 'login/recuperar_contrasena.html')
 
-
-# recuperar contraseña
 def mostrarLogin5(request):
     return render(request, 'login/restablecer_contrasena.html')
 
+# JUEGOS =============================================
 
-# VIDEOGAMES         =============================================
-
-# Trvia Home
 def mostrarVideogames(request):
     return render(request, 'html/juegos/trivia/index.html')
-# Trivia Menu
+
 def mostrarVideogames11(request):
     return render(request, 'html/juegos/trivia/menu.html')
 
-# Trivia Juego
 def mostrarVideogames12(request):
     return render(request, 'html/juegos/trivia/juego.html')
 
-# Trivia Final
 def mostrarVideogames13(request):
     return render(request, 'html/juegos/trivia/final.html')
 
-# funciones para registro y login
+# REGISTRO USUARIO =============================================
 
-# Asegúrate de que esta función exista y esté nombrada exactamente 'registro_usuario'
 def registro_usuario(request):
     if request.method == 'POST':
         form = RegistroUsuarioForms(request.POST)
         if form.is_valid():
-            usuario = form.save(commit=False)
-            usuario.contraseña = make_password(form.cleaned_data['contraseña'])
-            usuario.save()
-
             try:
-                user_django = User.objects.create_user(
-                    username=form.cleaned_data['nombre_usuario'],
-                    email=form.cleaned_data['correo_electronico'],
-                    password=form.cleaned_data['contraseña']
-                )
-                user_django.save()
-            except Exception as e:
-                messages.error(request, f'Error al crear usuario de autenticación: {e}')
-                print(f"Error al crear usuario de autenticación: {e}")
-                return render(request, 'mi_app_registro/registro.html', {'form': form})
+                username = form.cleaned_data['nombre_usuario']
+                email = form.cleaned_data['correo_electronico']
+                password = form.cleaned_data['contraseña']
 
-            messages.success(request, '¡Cuenta creada exitosamente! Por favor, inicia sesión.')
-            return redirect('Aplicacion:login')
+                # Crear usuario inactivo
+                user_django = User.objects.create_user(
+                    username=username,
+                    email=email,
+                    password=password
+                )
+                user_django.is_active = False
+                user_django.save()
+
+                # Enlace de activación
+                uid = urlsafe_base64_encode(force_bytes(user_django.pk))
+                token = account_activation_token.make_token(user_django)
+                activation_link = f"http://localhost:8000/activar/{uid}/{token}/"
+
+                mail_subject = 'Activa tu cuenta en WalkUp'
+                message = render_to_string('html/correo_activacion.html', {
+                    'user': user_django,
+                    'activation_link': activation_link
+                })
+
+                email_message = EmailMessage(
+                    subject=mail_subject,
+                    body=message,
+                    to=[email]
+                )
+                email_message.content_subtype = "html"
+                email_message.encoding = "utf-8"
+                email_message.send()
+
+                messages.success(request, 'Cuenta creada. Verifica tu correo electrónico para activarla.')
+                return redirect('Aplicacion:login')
+
+            except Exception as e:
+                messages.error(request, f'Error al crear usuario: {str(e)}')
+                return render(request, 'mi_app_registro/registro.html', {'form': form})
+        else:
+            messages.error(request, 'Por favor corrige los errores del formulario.')
+            return render(request, 'mi_app_registro/registro.html', {'form': form})
     else:
         form = RegistroUsuarioForms()
-
     return render(request, 'mi_app_registro/registro.html', {'form': form})
 
-def registro_exitoso(request):
-    return render(request, 'mi_app_registro/registro_exitoso.html')
+# ACTIVAR CUENTA =============================================
 
+def activar_cuenta(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except:
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, '¡Cuenta activada! Ya puedes iniciar sesión.')
+        return redirect('login')
+    else:
+        messages.error(request, 'El enlace de activación no es válido.')
+        return redirect('registro')
+
+# LOGIN / LOGOUT =============================================
 
 def login_usuario(request):
     if request.method == 'POST':
@@ -154,75 +180,45 @@ def login_usuario(request):
 
     return render(request, 'mi_app_registro/login.html', {'form': form})
 
-def mi_pagina(request):
-    if request.user.is_authenticated:
-        return render(request, 'mi_app_registro/registro.html', {'username': request.user.username})
-    else:
-        messages.warning(request, 'Debes iniciar sesión para acceder a esta página.')
-        return redirect('mi_app_registro:login')
-
 def logout_usuario(request):
     logout(request)
     messages.info(request, 'Has cerrado sesión correctamente.')
     return redirect('mi_app_registro:login')
 
-# ==== MOSTRAR RUTAS A LOS USUARIOS =====
+# RUTAS (CRUD) =============================================
 
 def lista_rutas(request):
-    # Obtiene todas las rutas de la base de datos
     rutas = Ruta.objects.all().order_by('nombre_ruta')
-    # Pasa las rutas al contexto para que estén disponibles en la plantilla
-    return render(request, 'Aplicacion/rutas.html', {'rutas': rutas})
+    return render(request, 'html/rutas.html', {'rutas': rutas})
 
-# Vista para la lista de rutas
-def lista_rutas(request):
-    rutas = Ruta.objects.all().order_by('nombre_ruta')
-    return render(request, 'html/rutas/rutas.html', {'rutas': rutas}) 
-
-# Vista para los detalles de una ruta específica
 def detalle_ruta(request, ruta_id):
     ruta = get_object_or_404(Ruta, pk=ruta_id)
-    return render(request, 'html/rutas/detalle_ruta.html', {'ruta': ruta}) 
+    return render(request, 'html/rutas/detalle_ruta.html', {'ruta': ruta})
 
-# Vista para crear una nueva ruta
 def crear_ruta(request):
     if request.method == 'POST':
         form = RutaForm(request.POST)
         if form.is_valid():
-            nueva_ruta = form.save(commit=False)
-            # if request.user.is_authenticated:
-            #     # Asumiendo que request.user es una instancia de Usuario (o lo mapeas)
-            #     nueva_ruta.creada_por = Usuario.objects.get(nombre_usuario=request.user.username) 
-            #     # O de forma más robusta:
-            #     # if hasattr(request.user, 'usuario_profile'): # Si tienes un OneToOneField de User a Usuario
-            #     #     nueva_ruta.creada_por = request.user.usuario_profile
-            #     # else: # Si request.user es directamente tu modelo Usuario (menos común si usas el auth de Django)
-            #     #     nueva_ruta.creada_por = request.user
-            #     # O simplemente si siempre la va a crear un usuario existente:
-            #     # nueva_ruta.creada_por = Usuario.objects.get(pk=ID_DEL_USUARIO_QUE_CREA) 
-            nueva_ruta.save()
-            return redirect('rutas')
+            nueva_ruta = form.save()
+            return redirect('mi_app_registro:rutas')
     else:
         form = RutaForm()
-    # Ajusta la ruta de la plantilla. Podrías crear una específica para el formulario
-    return render(request, 'html/rutas/crear_ruta.html', {'form': form}) 
+    return render(request, 'html/rutas/crear_ruta.html', {'form': form})
 
+# FAVORITAS =============================================
 
-# Vistas para marcar/desmarcar como favorita
 def marcar_favorita(request, ruta_id, usuario_id):
     ruta = get_object_or_404(Ruta, pk=ruta_id)
     usuario = get_object_or_404(Usuario, pk=usuario_id)
 
     if not UserRutaFavorita.objects.filter(usuario=usuario, ruta=ruta).exists():
         UserRutaFavorita.objects.create(usuario=usuario, ruta=ruta)
-    
-    # Redirige de vuelta a la página de detalle de la ruta
-    return redirect('detalle_ruta', ruta_id=ruta.id) 
+
+    return redirect('detalle_ruta', ruta_id=ruta.id)
 
 def quitar_favorita(request, ruta_id, usuario_id):
     ruta = get_object_or_404(Ruta, pk=ruta_id)
     usuario = get_object_or_404(Usuario, pk=usuario_id)
-    
+
     UserRutaFavorita.objects.filter(usuario=usuario, ruta=ruta).delete()
-    
     return redirect('detalle_ruta', ruta_id=ruta.id)
