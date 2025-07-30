@@ -1,0 +1,50 @@
+body{
+  background-image: url(../images/fotos/Wallpaper_Rutas.png);
+  font-family: 'Times New Roman', Times, serif;
+  margin-top: 5%;
+}
+
+.morro {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  border-radius: 10px;
+  background-color: rgb(245, 240, 240);
+  box-shadow: 10px 0px 5px rgba(0, 0, 0, 0.49);
+  font-size: 1.2rem;
+}
+
+h1{
+  text-align: center;
+}
+
+.img-morro {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.regresar {
+  background-color: #cabfbf;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  position: absolute;
+  top: 110px;
+  left: 10px;
+  
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+.regresar:hover{
+    background-color: rgb(167, 224, 168);
+}

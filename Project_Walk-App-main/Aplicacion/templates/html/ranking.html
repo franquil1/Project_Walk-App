@@ -1,0 +1,148 @@
+{% extends 'html/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/ranking.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="ranking-stats-wrapper">
+
+  <!-- === RANKING MENSUAL === -->
+  <section class="ranking-section animate__animated animate__fadeInUp" aria-label="Ranking Mensual">
+    <div class="ranking-box">
+      <h2 class="section-title">🏆 Ranking Mensual</h2>
+      <ul class="ranking-list" role="list">
+        <li class="ranking-item gold"><span>🥇 1. Melquicedec Mercado</span><span>1500 pts</span></li>
+        <li class="ranking-item silver"><span>🥈 2. Ronal Camilo Benavidez</span><span>1400 pts</span></li>
+        <li class="ranking-item bronze"><span>🥉 3. Cristian Jimenez</span><span>1300 pts</span></li>
+        <li class="ranking-item"><span>4. Julian Fernandez</span><span>1200 pts</span></li>
+        <li class="ranking-item"><span>5. Kevin Chicaiza</span><span>1100 pts</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- === ESTADÍSTICAS PERSONALES === -->
+  <section class="stats-section animate__animated animate__fadeInUp" style="animation-delay: 0.2s;" aria-label="Estadísticas Personales">
+    <div class="stats-box">
+      <h2 class="section-title">📊 Estadísticas Personales</h2>
+
+      <canvas id="statsChart" aria-hidden="true"></canvas>
+
+      <div class="table-wrapper" role="region" aria-label="Tabla de estadísticas mensuales" tabindex="0">
+        <table class="stats-table" role="table">
+          <caption class="sr-only">Estadísticas mensuales de caminatas</caption>
+          <thead>
+            <tr>
+              <th scope="col">Mes</th>
+              <th scope="col">Puntos</th>
+              <th scope="col">Ruta Principal</th>
+              <th scope="col">Distancia</th>
+              <th scope="col">Tiempo</th>
+              <th scope="col">Días Activos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="mes-oct">Octubre</td>
+              <td id="puntos-oct">1500</td>
+              <td id="ruta-oct">Parque Central</td>
+              <td id="distancia-oct">120 km</td>
+              <td id="tiempo-oct">15h</td>
+              <td id="dias-oct"><span class="badge">20</span></td>
+            </tr>
+            <tr>
+              <td id="mes-sep">Septiembre</td>
+              <td id="puntos-sep">1400</td>
+              <td id="ruta-sep">Sendero Montañoso</td>
+              <td id="distancia-sep">110 km</td>
+              <td id="tiempo-sep">14h</td>
+              <td id="dias-sep"><span class="badge">18</span></td>
+            </tr>
+            <tr>
+              <td id="mes-ago">Agosto</td>
+              <td id="puntos-ago">1300</td>
+              <td id="ruta-ago">Paseo Urbano</td>
+              <td id="distancia-ago">100 km</td>
+              <td id="tiempo-ago">13h</td>
+              <td id="dias-ago"><span class="badge">16</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- === CAMINATAS RECIENTES === -->
+  <section class="recent-hikes-section animate__animated animate__fadeInUp" style="animation-delay: 0.4s;" aria-label="Caminatas Recientes">
+    <div class="hikes-box">
+      <h2 class="section-title">🚶 Caminatas Recientes</h2>
+      <div class="hikes-grid">
+        <article class="hike-card" aria-label="Caminata Las Tres Cruces">
+          <h5 class="hike-title">Las Tres Cruces</h5>
+          <p>📍 Popayán | 🗓️ 15 Julio 2025</p>
+          <p>6.5 km | 1h 45m</p>
+          <span class="hike-tag">🌄 Alta intensidad</span>
+        </article>
+        <article class="hike-card" aria-label="Caminata Torre 24">
+          <h5 class="hike-title">Torre 24</h5>
+          <p>📍 El Túnel | 🗓️ 12 Julio 2025</p>
+          <p>8 km | 2h 10m</p>
+          <span class="hike-tag">🌲 Ruta boscosa</span>
+        </article>
+        <article class="hike-card" aria-label="Caminata Río Molino">
+          <h5 class="hike-title">Río Molino</h5>
+          <p>📍 Popayán | 🗓️ 7 Julio 2025</p>
+          <p>5.2 km | 1h 20m</p>
+          <span class="hike-tag">🏞️ Sendero tranquilo</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Obtener datos desde la tabla
+    const meses = [];
+    const puntos = [];
+
+    document.querySelectorAll('.stats-table tbody tr').forEach(row => {
+      const celdas = row.querySelectorAll('td');
+      meses.push(celdas[0].textContent);
+      puntos.push(parseInt(celdas[1].textContent));
+    });
+
+    // Crear el gráfico dinámicamente
+    const ctx = document.getElementById('statsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: meses,
+        datasets: [{
+          label: 'Puntos por Mes',
+          data: puntos,
+          backgroundColor: ['#3e95cd', '#8e5ea2', '#3cba9f']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
+</script>
+{% endblock %}

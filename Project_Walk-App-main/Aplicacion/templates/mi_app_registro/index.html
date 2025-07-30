@@ -1,0 +1,81 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Walk App</title>
+    <link rel="stylesheet" href="{% static 'css/login/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h1>Walk App</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="/templates/index.html">Inicio</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">
+                        <i class="fas fa-hiking"></i>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="/templates/mi_perfil.html">
+                            <i class="fas fa-user"></i> Mi Perfil
+                        </a>
+                        <a href="/templates/login.html">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <button class="hamburger" aria-label="Menú móvil">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+        <div class="mobile-menu hidden">
+            <a href="/templates/index.html">Inicio</a>
+            <a href="/templates/mi_perfil.html">
+                <i class="fas fa-user"></i> Mi Perfil
+            </a>
+            <a href="/templates/login.html">
+                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+            </a>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="welcome-text">
+            <h2>¡Explora nuevas rutas!</h2>
+            <p>Descubre senderos, aventuras y las últimas novedades de la comunidad.</p>
+        </div>
+
+        <section class="novedades">
+            <h3>Últimas Novedades</h3>
+            <ul>
+                <li>¡Nueva ruta al Valle Encantado disponible!</li>
+                <li>Evento comunitario: Caminata Nocturna este sábado.</li>
+                <li>Mejora en los mapas y GPS sin conexión.</li>
+            </ul>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Walk App. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

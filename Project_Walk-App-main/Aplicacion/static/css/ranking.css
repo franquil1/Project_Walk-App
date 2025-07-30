@@ -1,0 +1,154 @@
+/* === RESETEO GENERAL === */
+
+
+body {
+  background-image: url(../images/fotos/Wallpaper_Rutas.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  padding-top: 90px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+    line-height: 1.6;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* === CONTENEDOR PRINCIPAL === */
+.ranking-stats-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* === SECCIONES === */
+section {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #1e88e5;
+  text-align: center;
+}
+
+/* === RANKING LIST === */
+.ranking-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ranking-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #eee;
+  font-size: 1.1rem;
+}
+
+.ranking-item span:first-child {
+  font-weight: bold;
+}
+
+.ranking-item.gold {
+  background-color: #fff9c4;
+}
+
+.ranking-item.silver {
+  background-color: #e0e0e0;
+}
+
+.ranking-item.bronze {
+  background-color: #ffe0b2;
+}
+
+/* === ESTADÍSTICAS === */
+.stats-box {
+  overflow-x: auto;
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.stats-table th,
+.stats-table td {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.stats-table thead {
+  background-color: #f0f0f0;
+}
+
+.badge {
+  background-color: #42a5f5;
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+/* === CAMINATAS RECIENTES === */
+.hikes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.hike-card {
+  background-color: #fafafa;
+  border-left: 5px solid #1e88e5;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+
+.hike-card:hover {
+  transform: scale(1.02);
+}
+
+.hike-title {
+  font-size: 1.2rem;
+  color: #1e88e5;
+  margin-bottom: 0.5rem;
+}
+
+.hike-tag {
+  display: inline-block;
+  margin-top: 0.8rem;
+  background-color: #e3f2fd;
+  color: #1565c0;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+/* === ANIMACIONES RESPONSIVAS === */
+@media (max-width: 768px) {
+  .ranking-item,
+  .stats-table th,
+  .stats-table td {
+    font-size: 0.95rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+}

@@ -1,0 +1,47 @@
+{% extends 'html/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/infomorro.css' %}">
+<link rel="stylesheet" href="{% static 'css/infomorro.css' %}">
+
+<section class="morro">
+  <h1>El Morro de Tulcán - Popayán</h1>
+  <p>
+    El <strong>Morro de Tulcán</strong> es uno de los sitios más emblemáticos de la ciudad de Popayán, Colombia. 
+    Se trata de una colina artificial construida por culturas prehispánicas que fue posteriormente utilizada por los colonizadores españoles como punto estratégico.
+  </p>
+
+  <p>
+    Actualmente, el Morro es un lugar de visita obligada para turistas y locales, no solo por su valor arqueológico, 
+    sino por la impresionante vista panorámica que ofrece sobre el centro histórico de Popayán.
+  </p>
+
+  <p>
+    En la cima del Morro se encuentra una estatua ecuestre del libertador <strong>Antonio Nariño</strong>, 
+    figura clave en la historia de Colombia. El atardecer desde este punto es especialmente apreciado por quienes practican senderismo urbano o buscan un espacio de conexión con la historia y la naturaleza.
+  </p>
+
+  <h3>¿Qué puedes hacer en el Morro?</h3>
+  <ul>
+    <li>Subir caminando por la colina y disfrutar del aire puro.</li>
+    <li>Observar una panorámica única de Popayán.</li>
+    <li>Tomar fotografías históricas y naturales.</li>
+    <li>Conocer más sobre la cultura indígena prehispánica.</li>
+  </ul>
+
+  <p>
+    🕓 <strong>Recomendación:</strong> Visitar en la tarde para disfrutar del atardecer y tomar fotografías.
+  </p>
+
+ <button class="regresar"><a href="{% url 'vista-morro' %}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a></button>
+</section>
+
+
+
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends 'html/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/rutas.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <section aria-labelledby="titulo-rutas">
+            <h2 id="titulo-rutas" class="section-title">Rutas de Senderismo</h2>
+
+            <div class="rutas-grid"> {# La cuadrícula ahora es un div separado #}
+                <article class="ruta-card">
+                    <div class="ruta-image-container">
+                        <img src="{% static 'images/el morro/el_morro.jpg' %}" alt="Imagen del Sendero del Morro de Tulcán" class="ruta-image">
+                    </div>
+                    <div class="ruta-info">
+                        <h3>Ruta 1: Sendero del Morro de Tulcán</h3>
+                        <p><strong><i class="far fa-clock"></i> Tiempo:</strong> 2 horas</p>
+                        <p><strong><i class="fas fa-route"></i> Distancia:</strong> 5 km</p>
+                        <p><strong><i class="fas fa-mountain"></i> Terreno:</strong> Boscoso</p>
+                        <p class="ruta-description">Un recorrido suave por el histórico Morro de Tulcán, ideal para conectarse con la historia indígena y disfrutar vistas panorámicas del centro colonial.</p>
+                    </div>
+                </article>
+
+                <article class="ruta-card">
+                    <div class="ruta-image-container">
+                        <img src="{% static 'images/Rutas/Pisoje.jpg' %}" alt="Imagen del Camino de las Cascadas de Pisojé" class="ruta-image">
+                    </div>
+                    <div class="ruta-info">
+                        <h3>Ruta 2: Camino de las Cascadas de Pisojé</h3>
+                        <p><strong><i class="far fa-clock"></i> Tiempo:</strong> 3 horas</p>
+                        <p><strong><i class="fas fa-route"></i> Distancia:</strong> 8 km</p>
+                        <p><strong><i class="fas fa-mountain"></i> Terreno:</strong> Rocoso</p>
+                        <p class="ruta-description">Aventura a través de senderos rocosos rodeados de vegetación exuberante, hasta llegar a las impresionantes cascadas naturales del corregimiento de Pisojé.</p>
+                    </div>
+                </article>
+
+                <article class="ruta-card">
+                    <div class="ruta-image-container">
+                        <img src="{% static 'images/Rutas/deslumbrante-montana.jpg' %}" alt="Imagen de la Senda al Mirador de El Tablazo" class="ruta-image">
+                    </div>
+                    <div class="ruta-info">
+                        <h3>Ruta 3: Senda al Mirador de El Tablazo</h3>
+                        <p><strong><i class="far fa-clock"></i> Tiempo:</strong> 1.5 horas</p>
+                        <p><strong><i class="fas fa-route"></i> Distancia:</strong> 4 km</p>
+                        <p><strong><i class="fas fa-mountain"></i> Terreno:</strong> Montañoso</p>
+                        <p class="ruta-description">Un ascenso corto pero panorámico que culmina en un mirador con vistas espectaculares de todo el valle de Popayán y sus majestuosas montañas andinas.</p>
+                    </div>
+                </article>
+
+                <article class="ruta-card">
+                    <div class="ruta-image-container">
+                        <img src="{% static 'images/Rutas/ruta-de-los-molinos-portada.jpg' %}" alt="Imagen de la Travesía del Río Molino" class="ruta-image">
+                    </div>
+                    <div class="ruta-info">
+                        <h3>Ruta 4: Travesía del Río Molino</h3>
+                        <p><strong><i class="far fa-clock"></i> Tiempo:</strong> 4 horas</p>
+                        <p><strong><i class="fas fa-route"></i> Distancia:</strong> 10 km</p>
+                        <p><strong><i class="fas fa-mountain"></i> Terreno:</strong> Mixto</p>
+                        <p class="ruta-description">Ruta fluvial que sigue el cauce del emblemático Río Molino, cruzando pequeños puentes, zonas rurales encantadoras y huertas campesinas tradicionales.</p>
+                    </div>
+                </article>
+
+                <article class="ruta-card">
+                    <div class="ruta-image-container">
+                        <img src="{% static 'images/Rutas/Sendero de Las Guacas.jpeg' %}" alt="Imagen del Sendero de Las Guacas" class="ruta-image">
+                    </div>
+                    <div class="ruta-info">
+                        <h3>Ruta 5: Sendero de Las Guacas</h3>
+                        <p><strong><i class="far fa-clock"></i> Tiempo:</strong> 2.5 horas</p>
+                        <p><strong><i class="fas fa-route"></i> Distancia:</strong> 6 km</p>
+                        <p><strong><i class="fas fa-mountain"></i> Terreno:</strong> Llanura</p>
+                        <p class="ruta-description">Un paseo tranquilo por una zona de vestigios arqueológicos, ideal para caminantes que buscan conectar con la naturaleza y la historia precolombina.</p>
+                    </div>
+                </article>
+
+                <article class="ruta-card">
+                    <div class="ruta-image-container">
+                        <img src="{% static 'images/Rutas/Sendero Nocturno del Río Blanco.jpg' %}" alt="Imagen del Sendero Nocturno del Río Blanco" class="ruta-image">
+                    </div>
+                    <div class="ruta-info">
+                        <h3>Ruta 6: Sendero Nocturno del Río Blanco</h3>
+                        <p><strong><i class="far fa-clock"></i> Tiempo:</strong> 2 horas</p>
+                        <p><strong><i class="fas fa-route"></i> Distancia:</strong> 5 km</p>
+                        <p><strong><i class="fas fa-mountain"></i> Terreno:</strong> Mixto</p>
+                        <p class="ruta-description">Sendero perfecto para caminatas al atardecer, con los relajantes sonidos del agua y la posibilidad de avistar luciérnagas en ciertas épocas del año.</p>
+                    </div>
+                </article>
+
+                <article class="ruta-card">
+                    <div class="ruta-image-container">
+                        <img src="{% static 'images/Rutas/Travesía del Valle de Puracé.webp' %}" alt="Imagen de la Travesía del Valle de Puracé" class="ruta-image">
+                    </div>
+                    <div class="ruta-info">
+                        <h3>Ruta 7: Travesía del Valle de Puracé</h3>
+                        <p><strong><i class="far fa-clock"></i> Tiempo:</strong> 5 horas</p>
+                        <p><strong><i class="fas fa-route"></i> Distancia:</strong> 12 km</p>
+                        <p><strong><i class="fas fa-mountain"></i> Terreno:</strong> Montañoso</p>
+                        <p class="ruta-description">Imponente ruta en el Parque Nacional Natural Puracé, rodeada de páramo, frailejones y con la increíble posibilidad de avistar el majestuoso cóndor andino.</p>
+                    </div>
+                </article>
+
+                <article class="ruta-card">
+                    <div class="ruta-image-container">
+                        <img src="{% static 'images/Rutas/Camino del Lago El Boquerón.jpg' %}" alt="Imagen del Camino del Lago El Boquerón" class="ruta-image">
+                    </div>
+                    <div class="ruta-info">
+                        <h3>Ruta 8: Camino del Lago El Boquerón</h3>
+                        <p><strong><i class="far fa-clock"></i> Tiempo:</strong> 3 horas</p>
+                        <p><strong><i class="fas fa-route"></i> Distancia:</strong> 7 km</p>
+                        <p><strong><i class="fas fa-mountain"></i> Terreno:</strong> Llanura</p>
+                        <p class="ruta-description">Ruta serena que atraviesa humedales y lagunas cercanas a la vereda El Boquerón, perfecta para la observación de aves y la tranquilidad.</p>
+                    </div>
+                </article>
+
+                <article class="ruta-card">
+                    <div class="ruta-image-container">
+                        <img src="{% static 'images/Rutas/Sendero de las Nubes en el Volcán Puracé.jpg' %}" alt="Imagen del Sendero de las Nubes en el Volcán Puracé" class="ruta-image">
+                    </div>
+                    <div class="ruta-info">
+                        <h3>Ruta 9: Sendero de las Nubes en el Volcán Puracé</h3>
+                        <p><strong><i class="far fa-clock"></i> Tiempo:</strong> 6 horas</p>
+                        <p><strong><i class="fas fa-route"></i> Distancia:</strong> 15 km</p>
+                        <p><strong><i class="fas fa-mountain"></i> Terreno:</strong> Montañoso</p>
+                        <p class="ruta-description">Una experiencia exigente pero única en los altos del volcán Puracé, donde literalmente caminarás entre nubes y sentirás la actividad de los azufres.</p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="recomendaciones" aria-labelledby="titulo-recomendaciones">
+            <h2 id="titulo-recomendaciones" class="section-title">Recomendaciones de Equipamiento Esencial</h2>
+            <p class="section-description">Prepara tu aventura con estos elementos clave para una experiencia segura y cómoda.</p>
+            <ul class="recomendaciones-list">
+                <li><i class="fas fa-hiking"></i> Calzado cómodo y adecuado para el terreno (botas de senderismo).</li>
+                <li><i class="fas fa-tshirt"></i> Ropa ligera y transpirable (capas para cambios de clima).</li>
+                <li><i class="fas fa-sun"></i> Protector solar y gorra/sombrero (para protegerte del sol).</li>
+                <li><i class="fas fa-water"></i> Botella de agua y snacks (mantente hidratado y con energía).</li>
+                <li><i class="fas fa-map-marked-alt"></i> Mapa o GPS (para mantenerte orientado en la ruta).</li>
+                <li><i class="fas fa-first-aid"></i> Botiquín básico (para cualquier imprevisto).</li>
+                <li><i class="fas fa-lightbulb"></i> Linterna o frontal (si planeas caminar al atardecer o en la oscuridad).</li>
+                <li><i class="fas fa-suitcase-rolling"></i> Mochila cómoda (para llevar tus pertenencias).</li>
+                <li><i class="fas fa-camera"></i> Cámara (para capturar los momentos inolvidables).</li>
+                <li><i class="fas fa-binoculars"></i> Binoculares (para observación de fauna y paisajes).</li>
+                <li><i class="fas fa-umbrella-beach"></i> Impermeable o chaqueta cortavientos (para clima impredecible).</li>
+                <li><i class="fas fa-trash-alt"></i> Bolsa para tus residuos (¡No dejes rastro!).</li>
+            </ul>
+        </section>
+    </div>
+
+{% endblock %}

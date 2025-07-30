@@ -1,0 +1,420 @@
+body {
+    padding-top: 100px;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: rgba(17, 17, 17, 0.95);
+    padding: 15px 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: background-color 0.3s ease, padding 0.3s ease;
+    box-sizing: border-box;
+}
+
+
+.nav-brand,
+.nav-right {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.nav-brand {
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.nav-logo {
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 255, 55, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.nav-logo:hover {
+    transform: scale(1.05);
+}
+
+.nav-title {
+    font-size: 1.8rem;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-center {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li a {
+    position: relative;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #00ff37;
+}
+
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0%;
+    height: 3px;
+    background-color: #00ff37;
+    transition: width 0.4s ease-in-out, background-color 0.3s ease;
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+    background-color: #00cc2e;
+}
+
+.nav-right {
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.nav-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-container {
+    position: relative;
+    width: auto;
+    max-width: 250px;
+}
+
+.nav-search input[type="text"] {
+    padding: 10px 40px 10px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.nav-search input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.nav-search input[type="text"]:focus {
+    outline: none;
+    border-color: #00ff37;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-icon-button {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.nav-icon-button:hover {
+    color: #00ff37;
+}
+
+.nav-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.nav-button:hover {
+    background-color: #00ff37;
+    transform: translateY(-2px);
+}
+
+.btn-login img {
+    height: 24px; /* O el tamaño que necesites para el icono de usuario */
+    width: auto;
+    margin-right: 5px; /* Espacio entre el icono y el texto si lo hubiera */
+    border-radius: 0; /* Asegura que la imagen no tenga un border-radius 50% si no lo deseas */
+}
+.btn-login:hover {
+    background-color: transparent;
+    border-color: #00ff37;
+    color: #00ff37;
+    transform: translateY(-2px);
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 7px;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 5px;
+    transition: transform 0.3s ease;
+}
+
+.hamburger:hover {
+    transform: scale(1.1);
+}
+
+.hamburger div {
+    width: 30px;
+    height: 4px;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger.open div:nth-child(1) {
+    transform: translateY(11px) rotate(45deg);
+}
+.hamburger.open div:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.open div:nth-child(3) {
+    transform: translateY(-11px) rotate(-45deg);
+}
+
+.mobile-menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: #262626;
+    padding: 2.5rem 2rem;
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    z-index: 1000;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.mobile-menu.active {
+    transform: translateX(0);
+}
+
+.mobile-menu .menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu .nav-logo {
+    height: 60px;
+}
+
+.mobile-menu-titulo {
+    font-size: 22px;
+    padding-right: 15px;
+    color: white;
+    font-weight: 600;
+}
+
+.mobile-menu .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.mobile-menu .close-btn:hover {
+    color: #00ff37;
+    transform: rotate(90deg);
+}
+
+.mobile-menu a,
+.mobile-menu .btn-login {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    padding: 1rem 0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+    transition: color 0.3s ease, background-color 0.3s ease, padding-left 0.3s ease;
+}
+
+.mobile-menu a:hover,
+.mobile-menu .btn-login:hover {
+    color: #00ff37;
+    background-color: rgba(0, 255, 55, 0.05);
+    padding-left: 10px;
+}
+
+.mobile-menu .nav-search {
+    margin-top: 2rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+}
+
+.mobile-menu .input-container {
+    max-width: none;
+}
+
+.mobile-menu .nav-search input[type="text"] {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.mobile-menu .nav-search .nav-icon-button {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.mobile-menu .btn-login {
+    all: unset;
+    display: block;
+    background-color: #00cc2e;
+    color: white;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 30px;
+    text-align: center;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.mobile-menu .btn-login:hover {
+    background-color: #00ff37;
+    transform: translateY(-2px);
+    color: white;
+    padding-left: 1.5rem;
+}
+
+@media (max-width: 992px) {
+    .nav-links {
+        gap: 1.5rem;
+    }
+    .main-nav {
+        padding: 15px 20px;
+    }
+    .nav-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-center,
+    .nav-right {
+        display: none;
+    }
+
+    .main-nav {
+        justify-content: space-between;
+        padding: 15px 20px;
+    }
+
+    .nav-brand {
+        gap: 15px;
+    }
+
+    .nav-logo {
+        height: 50px;
+    }
+
+    .nav-title {
+        font-size: 1.3rem;
+    }
+}
+
+.bienvenida {
+    text-align: center;
+    margin-top: 40px;
+    padding: 50px 20px;
+    height: auto;
+    color: #333;
+}
+
+.bienvenida h1 {
+    font-size: 3.5rem;
+    color: #1a1a1a;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.bienvenida p {
+    color: #666;
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.main-logo {
+    width: 120px;
+    height: auto;
+    border-radius: 50%;
+    margin-top: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.AccionIr {
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #00cc2e;
+    color: white;
+    font-weight: bold;
+    margin-top: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.AccionIr:hover {
+    background-color: #00ff37;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 255, 55, 0.3);
+}
