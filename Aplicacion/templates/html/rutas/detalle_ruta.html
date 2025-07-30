@@ -1,22 +1,22 @@
+{% extends 'html/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Detalles de {{ ruta.nombre_ruta }}</title>
-    <link rel="stylesheet" href="{% static 'css/rutas/detalle.css' %}">
-</head>
-<body>
-    <h1>{{ ruta.nombre_ruta }}</h1>
-    <p><strong>Descripción:</strong> {{ ruta.descripcion }}</p>
-    <p><strong>Longitud:</strong> {{ ruta.longitud }} km</p>
-    <p><strong>Dificultad:</strong> {{ ruta.dificultad }}</p>
-    <p><strong>Ubicación:</strong> {{ ruta.ubicacion }}</p>
-    <p>
-        <a href="{% url 'mi_app_registro:marcar_favorita' ruta.id 1 %}">Marcar como Favorita</a> 
-        <a href="{% url 'mi_app_registro:quitar_favorita' ruta.id 1 %}">Quitar de Favoritas</a>
-    </p>
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/rutas/detalle.css' %}">
+{% endblock %}
 
-    <p><a href="{% url 'mi_app_registro:rutas' %}">Volver a la Lista de Rutas</a></p>
-</body>
-</html>
+{% block title %}{{ ruta.nombre_ruta }} - Detalles{% endblock %}
+
+{% block content %}
+<div>
+  <h1>{{ ruta.nombre_ruta }}</h1>
+  <p><strong>Descripción:</strong> {{ ruta.descripcion }}</p>
+  <p><strong>Longitud:</strong> {{ ruta.longitud }} km</p>
+  <p><strong>Dificultad:</strong> {{ ruta.dificultad }}</p>
+  <p><strong>Ubicación:</strong> {{ ruta.ubicacion }}</p>
+  <p>
+    <a href="{% url 'mi_app_registro:marcar_favorita' ruta.id 1 %}" class="btn btn-success">Marcar como Favorita</a>
+    <a href="{% url 'mi_app_registro:quitar_favorita' ruta.id 1 %}" class="btn btn-danger">Quitar de Favoritas</a>
+  </p>
+  <a href="{% url 'mi_app_registro:rutas' %}" class="btn btn-secondary">Volver a la Lista de Rutas</a>
+{% endblock %}

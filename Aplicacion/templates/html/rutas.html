@@ -1,24 +1,41 @@
+{% extends 'html/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Lista de Rutas de Senderismo</title>
-    <link rel="stylesheet" href="{% static 'css/rutas.css' %}">
-</head>
-<body>
-    <h1>Nuestras Rutas de Senderismo</h1>
-    <ul>
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/rutas.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="rutas-container">
+    <h1 class="rutas-titulo">Nuestras Rutas de Senderismo</h1>
+
+    <ul class="rutas-grid"> {# Changed from rutas-lista to rutas-grid for grid layout #}
         {% for ruta in rutas %}
-            <li>
-                <a href="{% url 'mi_app_registro:detalle_ruta' ruta.id %}">{{ ruta.nombre_ruta }}</a> - Dificultad: {{ ruta.dificultad }}
+            <li class="rutas-card"> {# Renamed from rutas-item to rutas-card #}
+                <div class="card-image">
+                    {# Assuming your 'ruta' object has an 'imagen' field (FileField/ImageField) #}
+                    {# Use a default image if no image is available for the route #}
+                    <img src="{% if ruta.imagen %}{{ ruta.imagen.url }}{% else %}{% static 'images/el morro/Maravillas-de-Popayan.jpg' %}{% endif %}"
+                         alt="Imagen de la ruta {{ ruta.nombre_ruta }}">
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">
+                        <a href="{% url 'mi_app_registro:detalle_ruta' ruta.id %}" class="card-title-link">{{ ruta.nombre_ruta }}</a>
+                    </h2>
+                    <p class="card-difficulty">Dificultad: <span>{{ ruta.dificultad }}</span></p>
+                </div>
             </li>
         {% empty %}
-            <li>No hay rutas disponibles para mostrar.</li>
+            <li class="rutas-card rutas-vacio">No hay rutas disponibles para mostrar.</li>
         {% endfor %}
     </ul>
+
     {% if request.user.is_authenticated and request.user.is_staff %}
-    <p><a href="{% url 'mi_app_registro:crear_ruta' %}">Añadir Nueva Ruta</a></p>
+    <p class="rutas-accion">
+        <a href="{% url 'mi_app_registro:crear_ruta' %}" class="rutas-boton-nueva">Añadir Nueva Ruta</a>
+    </p>
     {% endif %}
-</body>
-</html>
+</div>
+
+{% endblock %}

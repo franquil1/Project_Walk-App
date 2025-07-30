@@ -1,20 +1,18 @@
 /* === RESETEO GENERAL === */
-
-
 body {
   background-image: url(../images/fotos/Wallpaper_Rutas.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   padding-top: 90px;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa;
-    color: #343a40;
-    line-height: 1.6;
-    animation: fadeIn 1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  color: #343a40;
+  line-height: 1.6;
+  animation: fadeIn 1s ease-in-out;
 }
 
 /* === CONTENEDOR PRINCIPAL === */
@@ -38,7 +36,7 @@ section {
 .section-title {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
-  color: #1e88e5;
+  color: #00cc2e;
   text-align: center;
 }
 
@@ -73,69 +71,98 @@ section {
   background-color: #ffe0b2;
 }
 
-/* === ESTADÍSTICAS === */
-.stats-box {
-  overflow-x: auto;
+/* === ESTADÍSTICAS INTERACTIVAS === */
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
-.stats-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
+.stat-card {
+  position: relative;
+  overflow: hidden;
 }
 
-.stats-table th,
-.stats-table td {
-  padding: 0.8rem 1rem;
-  border: 1px solid #ddd;
-  text-align: center;
+.stat-card.interactive {
+  flex: 1 1 40%;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
 }
 
-.stats-table thead {
-  background-color: #f0f0f0;
+.stat-card.interactive:hover {
+  transform: scale(1.05);
+  background-color: #f0f8ff;
 }
 
-.badge {
-  background-color: #42a5f5;
-  color: white;
-  padding: 0.3rem 0.7rem;
-  border-radius: 8px;
-  font-weight: bold;
+.footprint-deco {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  font-size: 3.5em;
+  color: rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stat-card > *:not(.footprint-deco) {
+  position: relative;
+  z-index: 1;
+}
+
+.chart-container {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 /* === CAMINATAS RECIENTES === */
 .hikes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
 .hike-card {
-  background-color: #fafafa;
-  border-left: 5px solid #1e88e5;
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transition: transform 0.2s;
+  background-color: #fff;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
 }
 
 .hike-card:hover {
   transform: scale(1.02);
 }
 
+.hike-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.hike-info {
+  padding: 1rem;
+}
+
 .hike-title {
-  font-size: 1.2rem;
-  color: #1e88e5;
+  font-size: 1.1rem;
   margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 .hike-tag {
   display: inline-block;
-  margin-top: 0.8rem;
-  background-color: #e3f2fd;
-  color: #1565c0;
-  padding: 0.4rem 0.8rem;
-  border-radius: 999px;
+  margin-top: 0.5rem;
+  background-color: #e0f7fa;
+  color: #00796b;
+  padding: 0.3em 0.7em;
+  border-radius: 0.5rem;
   font-size: 0.85rem;
   font-weight: bold;
 }
