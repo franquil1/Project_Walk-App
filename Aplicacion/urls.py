@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static 
+from django.contrib.auth import views as auth_views
+from django.urls import path, include
 
 # ¡IMPORTANTE! app_name debe ser el nombre exacto de la carpeta de tu aplicación
 app_name = 'mi_app_registro' # Si tu carpeta de app se llama 'Aplicacion'
@@ -10,7 +12,7 @@ app_name = 'mi_app_registro' # Si tu carpeta de app se llama 'Aplicacion'
 urlpatterns = [
     path('home/', views.mostrarHome, name='home'),
     path('login/', views.login_usuario, name='login'),
-    path('logout/', views.logout_usuario, name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('registro/', views.registro_usuario, name='registro'),
     # urls de rutas
     path('rutas/', views.lista_rutas, name='rutas'),
@@ -20,6 +22,8 @@ urlpatterns = [
     path('rutas/<int:ruta_id>/quitar_favorito/<int:usuario_id>/', views.quitar_favorita, name='quitar_favorita'),
     #registro
     path('activar/<uidb64>/<token>/', views.activar_cuenta, name='activar_cuenta'),
+    #logoun
+    path('perfil/', views.profile_view, name='perfil'),
     
 ]
 

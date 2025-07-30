@@ -91,15 +91,6 @@ DATABASES = {
 } 
 
     
-# Password validation
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_HOST = 'smtp.gmail.com'              # Servidor SMTP de Gmail
-EMAIL_PORT = 587                           # Puerto para TLS
-EMAIL_USE_TLS = True                       # Usa TLS (no SSL)
-EMAIL_HOST_USER = 'sanchezfranquil93@gmail.com'     # Tu correo de envío
-EMAIL_HOST_PASSWORD = 'hjmw jwkv kpti zrdy'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -122,6 +113,18 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'es-CO'
+
+# ===== configuracion de correo electronico ======
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'              # Servidor SMTP de Gmail
+EMAIL_PORT = 587                           # Puerto para TLS
+EMAIL_USE_TLS = True                       # Usa TLS (no SSL)
+EMAIL_HOST_USER = 'caminapopayan@gmail.com'     # Tu correo de envío
+EMAIL_HOST_PASSWORD = 'cjlf jhym mhdy gpvy'
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  
+
 
 TIME_ZONE = 'America/Bogota'
 

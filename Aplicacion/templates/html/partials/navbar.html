@@ -1,15 +1,12 @@
-<!-- ========= ENCABEZADO ========== -->
 {%load static %}
 
 <header class="header-wrapper">
   <nav class="main-nav">
-    <!-- Izquierda: Logo y título -->
     <div class="nav-brand">
-      <img src="{% static '/images/imagenes/logo.jpg' %}" alt="Walk App Logo" class="nav-logo" />
+      <img src="{% static '/images/imagenes/logo.jpg' %}" alt="Walk App Logo" class="nav-logo"/>
       <h1 class="nav-title">Walk App</h1>
     </div>
 
-    <!-- Centro: Enlaces de navegación -->
     <div class="nav-center">
       <ul class="nav-links">
         <li><a href="{% url 'home' %}">Inicio</a></li>
@@ -20,7 +17,6 @@
       </ul>
     </div>
 
-    <!-- Derecha: Búsqueda e inicio de sesión -->
     <div class="nav-right">
       <form class="nav-search">
         <div class="input-container">
@@ -29,11 +25,27 @@
           </button>
         </div>
       </form>
-      <a href="{% url 'registro' %}" class="btn-login">registrarce</a>
-      <a href="{% url 'login' %}" class="btn-login">iniciar sesion</a>
+      <!-- <button class="nav-button btn-login">
+    <img src="{% static 'images/home_imgs/usuario.png'%}" alt="Icono de usuario" class="user-icon">
+    </button>
+ -->
+      {# Lógica para mostrar/ocultar botones en la navegación principal #}
+      {% if user.is_authenticated %}
+        {# Si el usuario está autenticado, muestra el icono de perfil y la opción de cerrar sesión #}
+        <a href="{% url 'mi_app_registro:perfil' %}" class="btn-profile-icon" aria-label="Perfil de usuario">
+            <i class="fas fa-user-circle"></i> {# Icono de perfil de Font Awesome #}
+        </a>
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %} {# ¡Importante para la seguridad de Django! #}
+            <button class="cerrar" type="submit">Cerrar Sesión</button>
+        </form>
+      {% else %}
+        {# Si el usuario NO está autenticado, muestra los botones de registrarse e iniciar sesión #}
+        <a href="{% url 'registro' %}" class="btn-login">Registrarse</a>
+        <a href="{% url 'login' %}" class="btn-login">Iniciar Sesión</a>
+      {% endif %}
     </div>
 
-    <!-- Botón menú hamburguesa -->
     <div class="hamburger">
       <div></div>
       <div></div>
@@ -41,21 +53,32 @@
     </div>
   </nav>
 
-  <!-- ========= MENÚ LATERAL MÓVIL ========= -->
   <div id="mobileMenu" class="mobile-menu">
     <div class="menu-header">
       <img src="{% static '/images/imagenes/logo.jpg' %}" alt="Walk App Logo" class="nav-logo" />
       <h1 class="mobile-menu-titulo">WALK APP</h1>
       <button id="closeMenu" class="close-btn" aria-label="Cerrar menú">&times;</button>
     </div>
-      <a href="{% url 'home' %}">Inicio</a>
-      <a href="{% url 'comunidad' %}">Comunidad</a>
-      <a href="{% url 'juegos' %}">Juegos</a>
-      <a href="{% url 'mi_app_registro:rutas' %}">Rutas</a>
-      <a href="{% url 'ranking' %}">Ranking</a>
+    <a href="{% url 'home' %}">Inicio</a>
+    <a href="{% url 'comunidad' %}">Comunidad</a>
+    <a href="{% url 'juegos' %}">Juegos</a>
+    <a href="{% url 'mi_app_registro:rutas' %}">Rutas</a>
+    <a href="{% url 'ranking' %}">Ranking</a>
 
-    <!-- loging -->
-    <a href="{% url 'login' %}" class="btn-login">Iniciar sesión</a>
+    <!-- ============ menu responsivo ================ -->
+
+    {# Lógica para mostrar/ocultar botones en el menú móvil #}
+    {% if user.is_authenticated %}
+        {# Si el usuario está autenticado, muestra el icono de perfil y la opción de cerrar sesión #}
+        <a href="{% url 'perfil' %}" class="btn-profile-icon mobile-menu-item" aria-label="Perfil de usuario">
+            <i class="fas fa-user-circle"></i> Mi Perfil
+        </a>
+        <a href="{% url 'logout' %}" class="btn-login mobile-menu-item">Cerrar Sesión</a>
+    {% else %}
+        {# Si el usuario NO está autenticado, muestra los botones de registrarse e iniciar sesión #}
+        <a href="{% url 'registro' %}" class="btn-login mobile-menu-item">Registrarse</a>
+        <a href="{% url 'login' %}" class="btn-login mobile-menu-item">Iniciar Sesión</a>
+    {% endif %}
 
     <form class="nav-search">
       <div class="input-icon-wrapper">
@@ -66,6 +89,4 @@
       </div>
     </form>
   </div>
-
-
 </header>

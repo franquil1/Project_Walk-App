@@ -9,6 +9,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+from django.contrib.auth.decorators import login_required
 
 # VISTAS GENERALES =============================================
 
@@ -60,6 +61,19 @@ def mostrarTorre24(request):
     })
 
 # LOGIN Y CUENTA =============================================
+    
+        # === registro ===
+
+@login_required
+def profile_view(request):
+    # Puedes pasar información del usuario al contexto si lo necesitas
+    context = {
+        'nombre_usuario': request.user,
+        'correo_electronico': request.user.email,
+        'contraseña':request.user.password,
+        
+    }
+    return render(request, 'html/perfil.html', context)
 
 def mostrarLogin(request):
     return render(request, 'login/index.html')

@@ -173,14 +173,30 @@ body {
     transform: translateY(-2px);
 }
 
-.btn-login img {
+/* Modificación para la imagen del botón de login */
+.btn-login {
+    background-color: transparent; /* Si quieres que sea un botón sin fondo inicial */
+    border: 1px solid white; /* Un borde para que sea visible */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-login .user-icon { /* Usamos la clase user-icon para la imagen */
     height: 24px; /* O el tamaño que necesites para el icono de usuario */
     width: auto;
     margin-right: 5px; /* Espacio entre el icono y el texto si lo hubiera */
     border-radius: 0; /* Asegura que la imagen no tenga un border-radius 50% si no lo deseas */
+    content: url('image_c1599b.png'); /* Ruta de tu imagen */
 }
+
 .btn-login:hover {
-    background-color: transparent;
+    background-color: transparent; /* Mantenemos transparente al pasar el ratón */
     border-color: #00ff37;
     color: #00ff37;
     transform: translateY(-2px);
@@ -310,9 +326,10 @@ body {
     color: rgba(255, 255, 255, 0.8);
 }
 
+/* Modificación para el botón de login en el menú móvil */
 .mobile-menu .btn-login {
-    all: unset;
-    display: block;
+    all: unset; /* Reinicia todos los estilos */
+    display: block; /* Para que ocupe todo el ancho disponible */
     background-color: #00cc2e;
     color: white;
     cursor: pointer;
@@ -322,15 +339,35 @@ body {
     text-align: center;
     margin-top: 20px;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Asegúrate de que el contenido de la imagen se ajuste correctamente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-menu .btn-login .user-icon { /* La imagen en el botón de login móvil */
+    height: 24px;
+    width: auto;
+    margin-right: 8px; /* Espacio a la derecha del ícono */
+    content: url('image_c1599b.png'); /* Ruta de tu imagen */
 }
 
 .mobile-menu .btn-login:hover {
     background-color: #00ff37;
     transform: translateY(-2px);
     color: white;
-    padding-left: 1.5rem;
+    padding-left: 1.5rem; /* Mantenemos el padding si solo cambia el color de fondo */
 }
 
+.cerrar{
+    background-color: #00ff37;
+    font-size: 1.1rem;
+    border-style: none;
+    border-radius: 50px;
+    padding: 5px;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 @media (max-width: 992px) {
     .nav-links {
         gap: 1.5rem;
