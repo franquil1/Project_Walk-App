@@ -52,5 +52,52 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// menu desplegable
+// validacion de contrasena
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const passwordInput = document.querySelector('input[name="contraseña"]');
+
+        if (!passwordInput) return;
+
+        const form = passwordInput.closest('form');
+
+        // Crear texto de ayuda
+        const ayuda = document.createElement('small');
+        ayuda.style.color = 'gray';
+        ayuda.textContent = "Debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.";
+        passwordInput.parentNode.appendChild(ayuda);
+
+        // Crear contenedor para error
+        const errorMsg = document.createElement('span');
+        errorMsg.id = "passwordError";
+        errorMsg.style.color = "red";
+        passwordInput.parentNode.appendChild(errorMsg);
+
+        // Validación en tiempo real
+        passwordInput.addEventListener('input', function () {
+            const password = passwordInput.value;
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+            if (regex.test(password)) {
+                errorMsg.textContent = "";
+                passwordInput.style.borderColor = "green";
+            } else {
+                errorMsg.textContent = "La contraseña no cumple con los requisitos.";
+                passwordInput.style.borderColor = "red";
+            }
+        });
+
+        // Validación al enviar
+        form.addEventListener('submit', function (e) {
+            const password = passwordInput.value;
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+            if (!regex.test(password)) {
+                e.preventDefault();
+                errorMsg.textContent = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.";
+                passwordInput.focus();
+            }
+        });
+    });
+
 

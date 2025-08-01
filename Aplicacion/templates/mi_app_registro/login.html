@@ -24,7 +24,7 @@
         {% csrf_token %}
         {{ form.as_p }} {# Esto renderizará los campos username y password del LoginForm #}
         <button type="submit">Iniciar Sesión</button>
-        <p>¿No tienes cuenta? <a href="{% url 'mi_app_registro:registro' %}">Regístrate aquí</a></p>
+        <p>¿No tienes cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a></p>
     </form>
 
 </body>

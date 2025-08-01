@@ -10,11 +10,35 @@ from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
+from django.contrib.auth.password_validation import validate_password
+from .models import RutaRecorrida
 
 # VISTAS GENERALES =============================================
 
 def mostrarHome(request):
-    return render(request, 'html/home.html')
+    rutas = Ruta.objects.all()
+
+    # Filtro por dificultad
+    dificultad = request.GET.get('dificultad')
+    if dificultad:
+        rutas = rutas.filter(dificultad__iexact=dificultad)
+
+    # Filtro por nombre (búsqueda)
+    buscar = request.GET.get('buscar')
+    if buscar:
+        rutas = rutas.filter(nombre_ruta__icontains=buscar)
+
+    # Filtro por distancia (realmente campo 'longitud')
+    distancia_param = request.GET.get('distancia')
+    if distancia_param:
+        try:
+            distancia = float(distancia_param)
+            rutas = rutas.filter(longitud__lte=distancia)
+        except ValueError:
+            pass  # Si no es un número válido, ignora el filtro
+
+    return render(request, 'html/home.html', {'rutas': rutas})
 
 def mostrarComunidad(request):
     return render(request, 'html/comunidad.html', {
@@ -61,17 +85,13 @@ def mostrarTorre24(request):
     })
 
 # LOGIN Y CUENTA =============================================
-    
-        # === registro ===
 
 @login_required
 def profile_view(request):
-    # Puedes pasar información del usuario al contexto si lo necesitas
     context = {
         'nombre_usuario': request.user,
         'correo_electronico': request.user.email,
-        'contraseña':request.user.password,
-        
+        'contrase\u00f1a': request.user.password,
     }
     return render(request, 'html/perfil.html', context)
 
@@ -110,9 +130,15 @@ def registro_usuario(request):
             try:
                 username = form.cleaned_data['nombre_usuario']
                 email = form.cleaned_data['correo_electronico']
-                password = form.cleaned_data['contraseña']
+                password = form.cleaned_data['contrase\u00f1a']
 
-                # Crear usuario inactivo
+                try:
+                    validate_password(password)
+                except ValidationError as e:
+                    for error in e.messages:
+                        messages.error(request, error)
+                    return render(request, 'mi_app_registro/registro.html', {'form': form})
+
                 user_django = User.objects.create_user(
                     username=username,
                     email=email,
@@ -121,7 +147,6 @@ def registro_usuario(request):
                 user_django.is_active = False
                 user_django.save()
 
-                # Enlace de activación
                 uid = urlsafe_base64_encode(force_bytes(user_django.pk))
                 token = account_activation_token.make_token(user_django)
                 activation_link = f"http://localhost:8000/activar/{uid}/{token}/"
@@ -141,8 +166,8 @@ def registro_usuario(request):
                 email_message.encoding = "utf-8"
                 email_message.send()
 
-                messages.success(request, 'Cuenta creada. Verifica tu correo electrónico para activarla.')
-                return redirect('Aplicacion:login')
+                messages.success(request, 'Cuenta creada. Verifica tu correo electr\u00f3nico para activarla.')
+                return redirect('login')
 
             except Exception as e:
                 messages.error(request, f'Error al crear usuario: {str(e)}')
@@ -166,11 +191,11 @@ def activar_cuenta(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        messages.success(request, '¡Cuenta activada! Ya puedes iniciar sesión.')
+        messages.success(request, '\u00a1Cuenta activada! Ya puedes iniciar sesi\u00f3n.')
         return redirect('login')
     else:
-        messages.error(request, 'El enlace de activación no es válido.')
-        return redirect('registro')
+        messages.error(request, 'El enlace de activaci\u00f3n no es v\u00e1lido.')
+        return redirect('mi_app_registro/registro')
 
 # LOGIN / LOGOUT =============================================
 
@@ -185,10 +210,10 @@ def login_usuario(request):
 
             if user is not None:
                 login(request, user)
-                messages.success(request, f'¡Bienvenido de nuevo, {username}!')
-                return redirect('Aplicacion:home')
+                messages.success(request, f'\u00a1Bienvenido de nuevo, {username}!')
+                return redirect('home')
             else:
-                messages.error(request, 'Nombre de usuario o contraseña incorrectos.')
+                messages.error(request, 'Nombre de usuario o contrase\u00f1a incorrectos.')
     else:
         form = LoginForm()
 
@@ -196,8 +221,27 @@ def login_usuario(request):
 
 def logout_usuario(request):
     logout(request)
-    messages.info(request, 'Has cerrado sesión correctamente.')
-    return redirect('mi_app_registro:login')
+    messages.info(request, 'Has cerrado sesi\u00f3n correctamente.')
+    return redirect('mi_app_registro/login')
+
+
+
+# =========== perfil de usuario =======
+
+@login_required
+def perfil_usuario(request):
+    rutas_recorridas = RutaRecorrida.objects.filter(usuario=request.user)
+    total_km = sum(ruta.ruta.distancia_km for ruta in rutas_recorridas)
+    total_horas = sum(ruta.ruta.duracion_horas for ruta in rutas_recorridas)
+
+    context = {
+        'usuario': request.user,
+        'rutas_recorridas': rutas_recorridas,
+        'total_km': total_km,
+        'total_horas': total_horas,
+    }
+    return render(request, 'html/perfil_usuario.html', context)
+
 
 # RUTAS (CRUD) =============================================
 
@@ -214,7 +258,7 @@ def crear_ruta(request):
         form = RutaForm(request.POST)
         if form.is_valid():
             nueva_ruta = form.save()
-            return redirect('mi_app_registro:rutas')
+            return redirect('rutas')
     else:
         form = RutaForm()
     return render(request, 'html/rutas/crear_ruta.html', {'form': form})

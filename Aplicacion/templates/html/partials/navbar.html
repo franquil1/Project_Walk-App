@@ -12,7 +12,7 @@
         <li><a href="{% url 'home' %}">Inicio</a></li>
         <li><a href="{% url 'comunidad' %}">Comunidad</a></li>
         <li><a href="{% url 'juegos' %}">Juegos</a></li>
-        <li><a href="{% url 'mi_app_registro:rutas' %}">Rutas</a></li>
+        <li><a href="{% url 'rutas' %}">Rutas</a></li>
         <li><a href="{% url 'ranking' %}">Ranking</a></li>
       </ul>
     </div>
@@ -32,7 +32,7 @@
       {# Lógica para mostrar/ocultar botones en la navegación principal #}
       {% if user.is_authenticated %}
         {# Si el usuario está autenticado, muestra el icono de perfil y la opción de cerrar sesión #}
-        <a href="{% url 'mi_app_registro:perfil' %}" class="btn-profile-icon" aria-label="Perfil de usuario">
+        <a href="{% url 'perfil_usuario' %}" class="btn-profile-icon" aria-label="Perfil de usuario">
             <i class="fas fa-user-circle"></i> {# Icono de perfil de Font Awesome #}
         </a>
         <form action="{% url 'logout' %}" method="post">
@@ -62,7 +62,7 @@
     <a href="{% url 'home' %}">Inicio</a>
     <a href="{% url 'comunidad' %}">Comunidad</a>
     <a href="{% url 'juegos' %}">Juegos</a>
-    <a href="{% url 'mi_app_registro:rutas' %}">Rutas</a>
+    <a href="{% url 'rutas' %}">Rutas</a>
     <a href="{% url 'ranking' %}">Ranking</a>
 
     <!-- ============ menu responsivo ================ -->
@@ -84,7 +84,6 @@
       <div class="input-icon-wrapper">
         <input type="text" placeholder="Buscar" class="nav-input" />
         <button type="submit" class="nav-button-inside" aria-label="Buscar">
-          <i class="fas fa-search"></i>
         </button>
       </div>
     </form>

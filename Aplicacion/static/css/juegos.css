@@ -9,7 +9,19 @@ html, body {
   width: 100%;
   overflow-x: hidden;
 }
-
+.salir {
+  background-color: #e1ebe1;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  text-decoration:none;
+}
 body {
     background-image: url(../images/fotos/Wallpaper_Rutas.png);
     background-size: cover;

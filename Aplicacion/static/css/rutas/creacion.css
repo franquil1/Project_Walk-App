@@ -1,144 +1,102 @@
-/* General Body Styles */
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fondo general con estilo profesional */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient to right, #ece9e6, #ffffff; /* Light gradient background */
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: linear-gradient(to bottom right, #e0f7f9, #c2e9fb);
     min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
 }
 
-/* Container for the form */
+/* Título */
 h1 {
-    color: #2c3e50;
-    text-align: center;
+    color: #0b2545;
     margin-bottom: 30px;
-    font-size: 2.5em;
-    font-weight: 600;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    font-size: 2.2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Form Styles */
+/* Formulario */
 form {
     background-color: #ffffff;
-    padding: 40px;
+    padding: 35px 40px;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 500px;
-    box-sizing: border-box;
-    border: 1px solid #e0e0e0;
+    max-width: 600px;
+    transition: all 0.3s ease;
 }
 
-/* Paragraphs within form (for form fields) */
+/* Campos del formulario */
 form p {
     margin-bottom: 20px;
 }
 
-/* Label Styles */
 form label {
     display: block;
     margin-bottom: 8px;
-    font-weight: 600;
-    color: #555;
-    font-size: 1.1em;
+    color: #333;
+    font-weight: bold;
 }
 
-/* Input and Select Field Styles */
 form input[type="text"],
-form input[type="number"], /* Assuming you might have number inputs */
-form input[type="file"], /* For image uploads */
-form textarea, /* If you have a description field */
+form input[type="number"],
+form input[type="file"],
+form textarea,
 form select {
-    width: calc(100% - 20px);
-    padding: 12px 10px;
-    margin-bottom: 15px;
+    width: 100%;
+    padding: 10px 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    font-size: 1em;
-    color: #333;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box;
+    font-size: 1rem;
+    background-color: #f8f9fa;
+    transition: border 0.3s;
 }
 
-form input[type="text"]:focus,
-form input[type="number"]:focus,
-form input[type="file"]:focus,
+form input:focus,
 form textarea:focus,
 form select:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    border-color: #0077cc;
     outline: none;
 }
 
-/* File input specific styling (can be tricky to style uniformly) */
-form input[type="file"] {
-    padding: 10px 0; /* Adjust padding for file input */
-    border: none;
-    background-color: transparent;
-}
-
-
-/* Button Styles */
+/* Botón principal */
 button[type="submit"] {
-    background-color: #007bff;
+    background-color: #0077cc;
     color: white;
-    padding: 14px 25px;
+    padding: 12px 24px;
+    font-size: 1rem;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1.1em;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background 0.3s ease;
+    margin-top: 10px;
     width: 100%;
-    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
+    background-color: #005fa3;
 }
 
-button[type="submit"]:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
-}
-
-/* Cancel Link Styles */
+/* Enlace cancelar */
 p a {
-    display: block;
-    text-align: center;
+    display: inline-block;
     margin-top: 20px;
-    color: #007bff;
+    color: #0b2545;
     text-decoration: none;
-    font-size: 1em;
-    transition: color 0.3s ease;
+    font-weight: 600;
+    transition: color 0.3s;
 }
 
 p a:hover {
-    color: #0056b3;
-    text-decoration: underline;
-}
-
-/* Error/Help Text (if your form framework adds these) */
-.helptext, .errorlist {
-    font-size: 0.9em;
-    color: #6a737d;
-    margin-top: -10px;
-    margin-bottom: 10px;
-}
-
-.errorlist {
-    color: #dc3545;
-    list-style-type: none;
-    padding: 0;
-    margin-top: 5px;
-}
-
-.errorlist li {
-    margin-bottom: 5px;
+    color: #0077cc;
 }

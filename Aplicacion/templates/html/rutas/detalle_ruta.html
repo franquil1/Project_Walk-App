@@ -15,8 +15,8 @@
   <p><strong>Dificultad:</strong> {{ ruta.dificultad }}</p>
   <p><strong>Ubicación:</strong> {{ ruta.ubicacion }}</p>
   <p>
-    <a href="{% url 'mi_app_registro:marcar_favorita' ruta.id 1 %}" class="btn btn-success">Marcar como Favorita</a>
-    <a href="{% url 'mi_app_registro:quitar_favorita' ruta.id 1 %}" class="btn btn-danger">Quitar de Favoritas</a>
+    <a href="{% url 'marcar_favorita' ruta.id 1 %}" class="btn btn-success">Marcar como Favorita</a>
+    <a href="{% url 'quitar_favorita' ruta.id 1 %}" class="btn btn-danger">Quitar de Favoritas</a>
   </p>
-  <a href="{% url 'mi_app_registro:rutas' %}" class="btn btn-secondary">Volver a la Lista de Rutas</a>
+  <a href="{% url 'rutas' %}" class="btn btn-secondary">Volver a la Lista de Rutas</a>
 {% endblock %}

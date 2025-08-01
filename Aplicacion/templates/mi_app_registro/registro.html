@@ -1,29 +1,24 @@
-{% load static %}<!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/login/register.css' %}">
     <title>Registro de Usuario</title>
+    <link rel="stylesheet" href="{% static 'css/login/registro.css' %}">
 </head>
 <body>
-    
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    
-    <form method="post">
+    <div class="contenedor">
+        <div class="formulario">
+            <form method="post">
+                {% csrf_token %}
                 <img src="{% static 'images/imagenes/logo.jpg' %}" alt="Logo">
-
-        <h1>Registro de Usuario</h1>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Registrar</button>
-        <p><a href="{% url 'mi_app_registro:login' %}">¿Ya tienes cuenta? Inicia sesión</a></p>
-    </form>
+                <h1>Registro de Usuario</h1>
+                {{ form.as_p }}
+                <button type="submit">Registrar</button>
+                <p><a href="{% url 'login' %}">¿Ya tienes cuenta? Inicia sesión</a></p>
+                <p><a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a></p>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

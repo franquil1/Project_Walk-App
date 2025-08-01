@@ -23,7 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # URL GENERALES
-
     path('perfil/', views.profile_view, name='perfil'),
     path('', views.mostrarHome, name='home'),
     path('comunidad/', views.mostrarComunidad, name='comunidad'),
@@ -32,7 +31,7 @@ urlpatterns = [
     path('registro/', views.registro_usuario, name='registro'),
     path('login/', views.login_usuario, name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'), 
-    path('', include(('Aplicacion.urls', 'Aplicacion'), namespace='Aplicacion')),
+    path('', include('Aplicacion.urls')),
 
 
 

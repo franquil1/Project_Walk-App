@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -49,6 +50,16 @@ class Ruta(models.Model):
 
     def __str__(self):
         return self.nombre_ruta
+    
+    # registro de rutas del usuario
+
+class RutaRecorrida(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    ruta = models.ForeignKey(Ruta, on_delete=models.CASCADE)
+    fecha = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.usuario.username} - {self.ruta.nombre}"
 
 class UserRutaFavorita(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)

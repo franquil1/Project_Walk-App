@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil de Usuario</title>
+    <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+</head>
+<body>
+    <div class="perfil">
+        <h1>Perfil de {{ usuario.username }}</h1>
+        <p><strong>Total de kilómetros recorridos:</strong> {{ total_km }} km</p>
+        <p><strong>Total de horas de caminata:</strong> {{ total_horas }} h</p>
+
+        <h2>Rutas Recorridas:</h2>
+        <ul>
+            {% for ruta in rutas_recorridas %}
+                <li>
+                    <strong>{{ ruta.ruta.nombre }}</strong> – {{ ruta.ruta.distancia_km }} km – {{ ruta.ruta.duracion_horas }} h ({{ ruta.fecha }})
+                </li>
+            {% empty %}
+                <li>No has recorrido rutas aún.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
