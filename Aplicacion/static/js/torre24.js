@@ -14,8 +14,10 @@
 
         // Ejemplo de una línea de ruta 
         var latlngs = [
-            [2.441922, -76.606270], // Punto de origen
-            [2.444521, -76.599980]  // Punto de destino 
+            https/maps.app.goo.gl/DwhSJvtr98cau99V8 // Punto de origen
+              // Punto de destino 
         ];
         var polyline = L.polyline(latlngs, {color: 'blue'}).addTo(map);
         map.fitBounds(polyline.getBounds());
+
+

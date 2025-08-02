@@ -3,6 +3,16 @@
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/rutas/detalle.css' %}">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+      margin-top: 20px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+    }
+  </style>
 {% endblock %}
 
 {% block title %}{{ ruta.nombre_ruta }} - Detalles{% endblock %}
@@ -19,4 +29,33 @@
     <a href="{% url 'quitar_favorita' ruta.id 1 %}" class="btn btn-danger">Quitar de Favoritas</a>
   </p>
   <a href="{% url 'rutas' %}" class="btn btn-secondary">Volver a la Lista de Rutas</a>
+
+  <!-- Mapa de la ruta -->
+  <div id="map"></div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Coordenadas de ejemplo: reemplázalas con {{ ruta.coordenadas|safe }} si las pasas como JSON
+    const coordenadasRuta = [
+      [2.444814, -76.614739],  // Punto A
+      [2.445200, -76.615500],  // Punto B
+      [2.445800, -76.616300]   // Punto C
+    ];
+
+    const mapa = L.map('map').setView(coordenadasRuta[0], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(mapa);
+
+    const ruta = L.polyline(coordenadasRuta, { color: 'blue' }).addTo(mapa);
+
+    mapa.fitBounds(ruta.getBounds());
+
+    L.marker(coordenadasRuta[0]).addTo(mapa).bindPopup("Inicio").openPopup();
+    L.marker(coordenadasRuta[coordenadasRuta.length - 1]).addTo(mapa).bindPopup("Fin");
+  </script>
 {% endblock %}
