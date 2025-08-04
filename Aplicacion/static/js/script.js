@@ -100,4 +100,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+/* overlay */
 
+function mostrarBuscador() {
+  document.getElementById("buscador-overlay").classList.add("active");
+}
+
+function ocultarBuscador() {
+  document.getElementById("buscador-overlay").classList.remove("active");
+}
+
+// BONUS: cerrar con tecla ESC
+document.addEventListener('keydown', function (e) {
+  if (e.key === "Escape") {
+    ocultarBuscador();
+  }
+});

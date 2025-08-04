@@ -1,91 +1,243 @@
- body {
-  background-image: url(../images/fotos/Wallpaper_Rutas.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f8f5;
-      margin: 0;
-      padding: 0;
-    }
+:root {
+    --color-acento: #00b341;
+    --color-fondo: #f9f9f9;
+    --color-card: #ffffff;
+    --color-texto: #1c1c1c;
+    --color-secundario: #777;
+    --borde-suave: 12px;
+    --sombra-suave: 0 4px 14px rgba(0, 0, 0, 0.1);
+    --transicion: all 0.3s ease;
+    --fuente: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    .comunidad-section {
-      max-width: 1200px;
-      margin: auto;
-      padding: 2rem;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    .titulo {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #ffffff;
-      text-align: center;
-    }
+body {
+    font-family: var(--fuente);
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+}
 
-    .cards-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
+.comunidad-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 2rem;
+    background-color: var(--color-card);
+    border-radius: var(--borde-suave);
+    box-shadow: var(--sombra-suave);
+    margin-top: 2rem;
+}
 
-    .card {
-      background-color: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-      overflow: hidden;
-      transition: transform 0.2s ease;
-    }
+.titulo-comunidad {
+    text-align: center;
+    font-size: 2.4rem;
+    color: var(--color-acento);
+    margin-bottom: 2rem;
+    font-weight: bold;
+}
 
-    .card:hover {
-      transform: translateY(-5px);
-    }
+.messages {
+    list-style: none;
+    margin-bottom: 2rem;
+}
+.messages .alert {
+    padding: 1rem;
+    border-radius: var(--borde-suave);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+.alert.success { background-color: #d0f5dd; color: #137333; }
+.alert.error { background-color: #fddede; color: #a33030; }
 
-    .card-header {
-      display: flex;
-      align-items: center;
-      padding: 1rem;
-    }
+.formulario-publicacion {
+    background-color: #f1f1f1;
+    padding: 1.5rem;
+    border-radius: var(--borde-suave);
+    box-shadow: var(--sombra-suave);
+}
+.formulario-publicacion h3 {
+    margin-bottom: 1rem;
+    color: var(--color-acento);
+    font-size: 1.4rem;
+}
+.formulario-publicacion label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: var(--color-texto);
+}
+.formulario-publicacion input,
+.formulario-publicacion textarea,
+.formulario-publicacion select {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.3rem;
+    border-radius: var(--borde-suave);
+    border: 1px solid #ccc;
+    background-color: #fff;
+    transition: var(--transicion);
+}
+.formulario-publicacion input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--color-acento);
+    outline: none;
+}
+.form-errors {
+    margin-top: 1rem;
+    color: #d00000;
+}
 
-    .card-header img {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      margin-right: 1rem;
-    }
+.btn-publicar {
+    margin-top: 1.5rem;
+    padding: 0.9rem 1.6rem;
+    background-color: var(--color-acento);
+    border: none;
+    border-radius: var(--borde-suave);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transicion);
+}
+.btn-publicar:hover {
+    background-color: #009c36;
+}
 
-    .card-header h3 {
-      margin: 0;
-      font-size: 1.1rem;
-      color: #2c3e50;
-    }
+.divider {
+    height: 2px;
+    background-color: #ddd;
+    border: none;
+    margin: 3rem 0;
+}
 
-    .card-body img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
+.card-publicacion {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: var(--borde-suave);
+    box-shadow: var(--sombra-suave);
+    margin-bottom: 2rem;
+}
 
-    .card-body .info {
-      padding: 1rem;
-    }
+.header-publicacion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.usuario-info strong {
+    color: var(--color-acento);
+    font-size: 1.1rem;
+}
+.fecha {
+    font-size: 0.9rem;
+    color: var(--color-secundario);
+}
 
-    .info h4 {
-      margin: 0 0 0.5rem;
-      color: #305c41;
-    }
+.imagen-publicacion img {
+    width: 100%;
+    border-radius: var(--borde-suave);
+    margin-bottom: 1rem;
+    object-fit: cover;
+    max-height: 400px;
+}
 
-    .info p {
-      margin: 0;
-      font-size: 0.9rem;
-      color: #555;
-    }
+.contenido-publicacion p {
+    margin-bottom: 0.7rem;
+}
 
-    .card-footer {
-      padding: 0.8rem 1rem;
-      border-top: 1px solid #eee;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+.comentarios {
+    margin-top: 1.5rem;
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: var(--borde-suave);
+}
+.comentarios h4 {
+    margin-bottom: 1rem;
+    color: var(--color-acento);
+}
+.comentarios p {
+    margin-bottom: 0.5rem;
+}
+.sin-comentarios {
+    font-style: italic;
+    color: var(--color-secundario);
+}
+
+.form-comentario {
+    display: flex;
+    margin-top: 1rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.form-comentario input[type="text"] {
+    flex-grow: 1;
+    padding: 0.6rem;
+    border-radius: var(--borde-suave);
+    border: 1px solid #ccc;
+}
+.btn-comentar {
+    padding: 0.6rem 1rem;
+    background-color: var(--color-acento);
+    border: none;
+    border-radius: var(--borde-suave);
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: var(--transicion);
+}
+.btn-comentar:hover {
+    background-color: #009c36;
+}
+
+/* Estilo input imagen */
+.custom-file-upload {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.upload-label {
+    background-color: var(--color-acento);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--borde-suave);
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transicion);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.upload-label:hover {
+    background-color: #009c36;
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+
+.file-name {
+    font-size: 0.9rem;
+    color: var(--color-secundario);
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 600px) {
+    .form-comentario {
+        flex-direction: column;
     }
-  
+    .form-comentario input[type="text"],
+    .btn-comentar {
+        width: 100%;
+    }
+}

@@ -11,7 +11,6 @@
     <title>¿Cuánto Sabes sobre Senderismo?</title>
 </head>
 <body>
-    <button class="salir"><a href="{% url 'home' %}">Cerrar</a></button>
     <div class="container">
         <header>
             <div class="puntaje">
@@ -34,5 +33,6 @@
     </div> 
     {% include 'html/partials/navbar.html' %}
     <script src="{% static '/js/trivia-index.js' %}"></script>
+    <button class="salir"><a href="{% url 'home' %}">Cerrar</a></button>
 </body>
 </html>

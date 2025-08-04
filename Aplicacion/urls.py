@@ -14,7 +14,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('registro/', views.registro_usuario, name='registro'),
     path('activar/<uidb64>/<token>/', views.activar_cuenta, name='activar_cuenta'),
-    path('comunidad/', views.comunidad_view, name='comunidad'),
+    path('comunidad/', comunidad_view, name='comunidad'),
 
     # ============================
     # PERFIL DE USUARIO
@@ -27,8 +27,11 @@ urlpatterns = [
     path('rutas/', views.lista_rutas, name='rutas'),
     path('rutas/crear/', views.crear_ruta, name='crear_ruta'),
     path('rutas/<int:ruta_id>/', views.detalle_ruta, name='detalle_ruta'),
-    path('rutas/<int:ruta_id>/favorito/<int:usuario_id>/', views.marcar_favorita, name='marcar_favorita'),
-    path('rutas/<int:ruta_id>/quitar_favorito/<int:usuario_id>/', views.quitar_favorita, name='quitar_favorita'),
+    path('ruta/eliminar/<int:pk>/', views.eliminar_ruta, name='eliminar_ruta'),
+    path('rutas/<int:ruta_id>/favorito/', views.marcar_favorita, name='marcar_favorita'),
+    path('rutas/<int:ruta_id>/quitar_favorito/', views.quitar_favorita, name='quitar_favorita'),
+
+    
 
     # ============================
     # VISTAS DE ADMINISTRADOR

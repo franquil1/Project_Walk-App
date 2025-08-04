@@ -177,3 +177,17 @@ tbody tr td[colspan] {
         text-transform: capitalize;
     }
 }
+/* ======================
+Estadisticas
+=======================*/
+.charts-container {
+    margin-top: 2rem;
+    gap: 40px;
+}
+
+canvas {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 1rem;
+}

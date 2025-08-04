@@ -11,11 +11,17 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Publicacion
+from django.db.models import Q
+from django.utils.timezone import now, timedelta
+from django.contrib.auth import get_user_model
+from django.db.models import F
+#---------------------------------------------------
+from .models import Publicacion, Comentario
+from .models import Ruta
+#----------------------------------------------------
 from .forms import PublicacionForm, ComentarioForm
-
 from .forms import RegistroUsuarioForms, LoginForm, RutaForm
-from .models import Ruta, UsuarioPersonalizado, UserRutaFavorita, RutaRecorrida
+from .models import UsuarioPersonalizado, UserRutaFavorita, RutaRecorrida
 from .utils import account_activation_token
 
 # ========== HOME Y SECCIONES GENERALES ==========
@@ -191,7 +197,25 @@ def admin_dashboard(request):
 
 @staff_member_required
 def admin_estadisticas(request):
-    return render(request, 'admin/admin_estadisticas.html')
+    User = get_user_model()
+
+    # Usuarios activos últimos 7 días
+    last_7_days = [now().date() - timedelta(days=i) for i in range(6, -1, -1)]
+    fechas = [d.strftime("%d/%m") for d in last_7_days]
+    usuarios_por_dia = [User.objects.filter(last_login__date=dia).count() for dia in last_7_days]
+
+    # Top 5 rutas más vistas
+    rutas_top = Ruta.objects.order_by('-vistas')[:5]
+    rutas_nombres = [ruta.nombre_ruta for ruta in rutas_top]
+    rutas_vistas = [ruta.vistas for ruta in rutas_top]
+
+    context = {
+        'fechas': fechas,
+        'usuarios_por_dia': usuarios_por_dia,
+        'rutas_nombres': rutas_nombres,
+        'rutas_vistas': rutas_vistas,
+    }
+    return render(request, 'admin/admin_estadisticas.html', context)
 
 @staff_member_required
 def admin_rutas(request):
@@ -208,17 +232,31 @@ def admin_usuarios(request):
     return render(request, 'admin/admin_usuarios.html', {'usuarios': usuarios})
 
 # ========== PERFIL USUARIO ==========
+
 @login_required
 def perfil_usuario(request):
-    rutas_recorridas = RutaRecorrida.objects.filter(usuario=request.user)
-    total_km = sum(r.ruta.longitud for r in rutas_recorridas)
-    total_horas = len(rutas_recorridas) * 1  # Suponiendo 1h por ruta por ahora
-    return render(request, 'html/perfil_usuario.html', {
-        'usuario': request.user,
+    usuario = request.user
+
+    # Rutas recorridas
+    rutas_recorridas = RutaRecorrida.objects.filter(usuario=usuario)
+
+    # Total kilómetros y horas
+    total_km = sum([r.ruta.longitud for r in rutas_recorridas if r.ruta.longitud])
+    total_horas = len(rutas_recorridas) * 3  # Supongamos 3h por ruta
+
+    # Rutas favoritas usando el related_name correcto
+    rutas_favoritas = usuario.rutas_favoritas.all()
+
+    context = {
+        'usuario': usuario,
         'rutas_recorridas': rutas_recorridas,
         'total_km': total_km,
         'total_horas': total_horas,
-    })
+        'rutas_favoritas': rutas_favoritas,
+    }
+
+    return render(request, 'html/perfil_usuario.html', context)
+
 
 # ========== CRUD RUTAS ==========
 def lista_rutas(request):
@@ -227,7 +265,7 @@ def lista_rutas(request):
 
 def detalle_ruta(request, ruta_id):
     ruta = get_object_or_404(Ruta, pk=ruta_id)
-    return render(request, 'html/rutas/detalle_ruta.html', {'ruta': ruta})
+    return render(request, 'html/detalle_ruta.html', {'ruta': ruta})
 
 def crear_ruta(request):
     if request.method == 'POST':
@@ -239,50 +277,101 @@ def crear_ruta(request):
         form = RutaForm()
     return render(request, 'html/rutas/crear_ruta.html', {'form': form})
 
+
+@staff_member_required
+def eliminar_ruta(request, pk):
+    ruta = get_object_or_404(Ruta, pk=pk)
+    ruta.delete()
+    return redirect('rutas')
+
 # ========== FAVORITOS ==========
-def marcar_favorita(request, ruta_id, usuario_id):
-    ruta = get_object_or_404(Ruta, pk=ruta_id)
-    usuario = get_object_or_404(UsuarioPersonalizado, pk=usuario_id)
-    if not UserRutaFavorita.objects.filter(usuario=usuario, ruta=ruta).exists():
-        UserRutaFavorita.objects.create(usuario=usuario, ruta=ruta)
+
+@login_required
+def marcar_favorita(request, ruta_id):
+    ruta = get_object_or_404(Ruta, id=ruta_id)
+    UserRutaFavorita.objects.get_or_create(usuario=request.user, ruta=ruta)
     return redirect('detalle_ruta', ruta_id=ruta.id)
 
-def quitar_favorita(request, ruta_id, usuario_id):
-    ruta = get_object_or_404(Ruta, pk=ruta_id)
-    usuario = get_object_or_404(UsuarioPersonalizado, pk=usuario_id)
-    UserRutaFavorita.objects.filter(usuario=usuario, ruta=ruta).delete()
+@login_required
+def quitar_favorita(request, ruta_id):
+    ruta = get_object_or_404(Ruta, id=ruta_id)
+    UserRutaFavorita.objects.filter(usuario=request.user, ruta=ruta).delete()
     return redirect('detalle_ruta', ruta_id=ruta.id)
+
+def detalle_ruta(request, ruta_id):
+    ruta = get_object_or_404(Ruta, id=ruta_id)
+    es_favorita = False
+    if request.user.is_authenticated:
+        es_favorita = UserRutaFavorita.objects.filter(usuario=request.user, ruta=ruta).exists()
+    return render(request, 'html/rutas/detalle_ruta.html', {
+        'ruta': ruta,
+        'es_favorita': es_favorita
+    })
 
 #==================
 # COMUNIDAD
 #==================
 
-@login_required
 def comunidad_view(request):
     publicaciones = Publicacion.objects.all().order_by('-fecha_publicacion')
 
+    publicacion_form = PublicacionForm()
+    comentario_form = ComentarioForm()
+
     if request.method == 'POST':
-        if 'comentario' in request.POST:
-            comentario_form = ComentarioForm(request.POST)
-            if comentario_form.is_valid():
-                comentario = comentario_form.save(commit=False)
-                comentario.usuario = request.user
-                comentario.publicacion_id = request.POST.get('publicacion_id')
-                comentario.save()
-                return redirect('comunidad')
+        # Comentario
+        if 'comentario_submit' in request.POST:
+            texto = request.POST.get("texto")
+            publicacion_id = request.POST.get("publicacion_id")
+            if texto and publicacion_id:
+                try:
+                    comentario = Comentario.objects.create(
+                        usuario=request.user,
+                        publicacion_id=int(publicacion_id),
+                        texto=texto
+                    )
+                    messages.success(request, "Comentario agregado con éxito.")
+                    return redirect("comunidad")
+                except Exception as e:
+                    print("⚠️ Error al guardar comentario:", e)
+                    messages.error(request, "No se pudo guardar el comentario.")
+            else:
+                messages.error(request, "El comentario no puede estar vacío.")
+        
+        # Publicación
         else:
             publicacion_form = PublicacionForm(request.POST, request.FILES)
             if publicacion_form.is_valid():
                 publicacion = publicacion_form.save(commit=False)
                 publicacion.usuario = request.user
                 publicacion.save()
+                messages.success(request, "Publicación creada con éxito.")
                 return redirect('comunidad')
-    else:
-        publicacion_form = PublicacionForm()
-        comentario_form = ComentarioForm()
+            else:
+                messages.error(request, "Error al crear publicación.")
+                print("Errores de publicación:", publicacion_form.errors)
 
-    return render(request, 'html/comunidad.html', {
+    context = {
         'publicaciones': publicaciones,
         'publicacion_form': publicacion_form,
-        'comentario_form': comentario_form,
-    })
+        'comentario_form': ComentarioForm(),
+    }
+    return render(request, 'html/comunidad.html', context)
+
+#=========================
+# Buscador
+#=========================
+def buscar_rutas(request):
+    query = request.GET.get('q')
+
+    if query:
+        rutas = Ruta.objects.filter(nombre_ruta__icontains=query)
+
+        if rutas.count() == 1:
+            return redirect('detalle_ruta', ruta_id=rutas.first().id)
+        elif rutas.exists():
+            return redirect('detalle_ruta', ruta_id=rutas.first().id)
+        else:
+            return render(request, 'html/sin_resultados.html', {'query': query})
+
+    return redirect('rutas')
