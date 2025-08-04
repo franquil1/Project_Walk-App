@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/juego-trivia/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="icon" href="{% static '/images/imagenes/logo.jpg' %}" type="image/x-icon">
     <title>¿Cuánto Sabes sobre Senderismo?</title>
 </head>
@@ -30,8 +31,8 @@
             <input type="text" id="nombre" placeholder="Escribe tu nombre aquí" required>
             <button class="btn" id="comenzar" data-url="{% url 'trivia_index' %}">Comenzar</button>
         </main>
-    </div>
-
+    </div> 
+    {% include 'html/partials/navbar.html' %}
     <script src="{% static '/js/trivia-index.js' %}"></script>
 </body>
 </html>

@@ -143,6 +143,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Registro del modelo de panel de usuario
+AUTH_USER_MODEL = 'Aplicacion.UsuarioPersonalizado'
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  
 

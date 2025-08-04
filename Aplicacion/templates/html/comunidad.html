@@ -1,122 +1,55 @@
 {% extends 'html/base.html' %}
 {% load static %}
 
-{% block extra_css %}
-  <link rel="stylesheet" href="{% static 'css/comunidad.css' %}">
-{% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Comunidad</title>
+    <link rel="stylesheet" href="{% static 'css/comunidad.css' %}">
+</head>
+<body>
+    <h1>Comunidad WalkUp</h1>
 
-{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ publicacion_form.as_p }}
+        <button type="submit">Publicar</button>
+    </form>
 
- <section class="comunidad-section">
-    <h2 class="titulo">Comunidad</h2>
-    <div class="cards-container">
+    <hr>
 
-      <div class="card">
-        <div class="card-header">
-          <img src="{% static 'images/comunidad/melqui.jpg' %}" alt="usuario">
-          <h3>Melquicedec Mercado</h3>
+    {% for pub in publicaciones %}
+    <div class="card">
+        <div class="usuario">
+            <strong>{{ pub.usuario.username }}</strong> — {{ pub.fecha_publicacion|date:"d M Y H:i" }}
         </div>
-        <div class="card-body">
-          <img src="{% static 'images/el morro/el_morro.jpg' %}" alt="Caminata">
-          <div class="info">
-            <h4>Ruta: El Morro </h4>
-            <p>“Un Día de Paz y Naturaleza. ¡Súper Recomendado!”</p>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span><i class="fa-solid fa-shoe-prints"></i> 5 Caminatas</span>
-        </div>
-      </div>
 
-      <div class="card">
-        <div class="card-header">
-          <img src="{% static 'images/comunidad/benavidez.jpg' %}" alt="usuario">
-          <h3>Ronal Banavidez</h3>
-        </div>
-        <div class="card-body">
-          <img src="{% static 'images/torre24/torre.jpg' %}" alt="Caminata">
-          <div class="info">
-            <h4>Ruta: Parque Principal(Torre del Reloj)</h4>
-            <p>“Expeiencia Inolvidable ”</p>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span><i class="fa-solid fa-shoe-prints"></i> 7 Caminatas</span>
-        </div>
-      </div>
+        <img src="{{ pub.imagen.url }}" alt="Imagen publicación" width="400">
 
-      <div class="card">
-        <div class="card-header">
-          <img src="{% static 'images/comunidad/kevin.jpg' %}" alt="usuario">
-          <h3>Kevin Chikaiza </h3>
+        <div class="contenido">
+            <p><strong>Ruta:</strong> {{ pub.ruta.nombre }}</p>
+            <p>{{ pub.comentario }}</p>
         </div>
-        <div class="card-body">
-          <img src="{% static 'images/tres cruces/cerro.jpg' %}" alt="Caminata">
-          <div class="info">
-            <h4>Ruta: Tres Cruces</h4>
-            <p>“Un Reto Mas Cumplido”</p>
-          </div>
 
-        </div>
-        <div class="card-footer">
-          <span><i class="fa-solid fa-shoe-prints"></i> 2 Caminatas</span>
-        </div>
-      </div>
+        <div class="comentarios">
+            <h4>Comentarios:</h4>
+            {% for com in pub.comentarios.all %}
+                <p><b>{{ com.usuario.username }}</b>: {{ com.texto }}</p>
+            {% empty %}
+                <p>Sin comentarios aún.</p>
+            {% endfor %}
 
-      <div class="card">
-        <div class="card-header">
-          <img src="{% static 'images/comunidad/Kevin.jpg' %}" alt="usuario">
-          <h3>Cristian Garzon  </h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ comentario_form.as_p }}
+                <input type="hidden" name="publicacion_id" value="{{ pub.id }}">
+                <button type="submit">Comentar</button>
+            </form>
         </div>
-        <div class="card-body">
-          <img src="{% static 'images/torre24/puente_humilladero.webp' %}" alt="Caminata">
-          <div class="info">
-            <h4>Ruta: Puente el humilladero</h4>
-            <p>“Meta Cumplida”</p>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span><i class="fa-solid fa-shoe-prints"></i> 5 Caminatas</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <img src="{% static 'images/comunidad/Kevin.jpg' %}" alt="usuario">
-          <h3>Juan Garcia  </h3>
-        </div>
-        <div class="card-body">
-          <img src="{% static 'images/torre24/OIP.jpeg' %}" alt="Caminata">
-          <div class="info">
-            <h4>Ruta: Centro</h4>
-            <p>“Conoci Mejor la Ciudad”</p>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span><i class="fa-solid fa-shoe-prints"></i> 6 Caminatas</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <img src="{% static 'images/comunidad/Kevin.jpg' %}" alt="usuario">
-          <h3>Julian Espinoza  </h3>
-        </div>
-        <div class="card-body">
-          <img src="{% static 'images/imagenes/ranking-mensual.jpg' %}" alt="Caminata">
-          <div class="info">
-            <h4>Ruta: Iglesia</h4>
-            <p>“Monumento Extraurdinario”</p>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span><i class="fa-solid fa-shoe-prints"></i> 2 Caminatas</span>
-        </div>
-      </div>
-
-      
-
     </div>
-  </section>
-
-  {% endblock %}
+    <hr>
+    {% endfor %}
+</body>
+</html>

@@ -1,99 +1,73 @@
+# ========== IMPORTACIONES ==========
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .forms import RegistroUsuarioForms, LoginForm, RutaForm
-from .models import Ruta, Usuario, UserRutaFavorita
-from .utils import account_activation_token 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.password_validation import validate_password
+from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
-from django.contrib.auth.password_validation import validate_password
-from .models import RutaRecorrida
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .models import Publicacion
+from .forms import PublicacionForm, ComentarioForm
 
-# VISTAS GENERALES =============================================
+from .forms import RegistroUsuarioForms, LoginForm, RutaForm
+from .models import Ruta, UsuarioPersonalizado, UserRutaFavorita, RutaRecorrida
+from .utils import account_activation_token
 
+# ========== HOME Y SECCIONES GENERALES ==========
 def mostrarHome(request):
     rutas = Ruta.objects.all()
-
-    # Filtro por dificultad
     dificultad = request.GET.get('dificultad')
+    buscar = request.GET.get('buscar')
+    distancia_param = request.GET.get('distancia')
+
     if dificultad:
         rutas = rutas.filter(dificultad__iexact=dificultad)
-
-    # Filtro por nombre (búsqueda)
-    buscar = request.GET.get('buscar')
     if buscar:
         rutas = rutas.filter(nombre_ruta__icontains=buscar)
-
-    # Filtro por distancia (realmente campo 'longitud')
-    distancia_param = request.GET.get('distancia')
     if distancia_param:
         try:
             distancia = float(distancia_param)
             rutas = rutas.filter(longitud__lte=distancia)
         except ValueError:
-            pass  # Si no es un número válido, ignora el filtro
+            pass
 
     return render(request, 'html/home.html', {'rutas': rutas})
 
 def mostrarComunidad(request):
-    return render(request, 'html/comunidad.html', {
-        'titulo_bienvenida': 'COMUNIDAD ',
-        'descripcion_bienvenida': 'Comparte experiencias y conecta con otros caminantes.',
-    })
+    return render(request, 'html/comunidad.html')
 
 def mostrarRutas(request):
-    return render(request, 'html/rutas.html', {
-        'titulo_bienvenida': 'RUTAS',
-        'descripcion_bienvenida': 'Comparte experiencias y conecta con otros caminantes.',
-    })
+    return render(request, 'html/rutas.html')
 
 def mostrarJuegos(request):
-    return render(request, 'html/juegos/trivia/index.html', {
-        'titulo_bienvenida': 'JUEGOS',
-        'descripcion_bienvenida': 'Diviértete con nuestros juegos interactivos de senderismo.',
-    })
+    return render(request, 'html/juegos/trivia/index.html')
 
 def mostrarRanking(request):
-    return render(request, 'html/ranking.html', {
-        'titulo_bienvenida': 'RANKING',
-        'descripcion_bienvenida': 'Celebra tus logros, escala posiciones y demuestra que cada paso vale.',
-    })
+    return render(request, 'html/ranking.html')
 
-# VISTAS RUTAS =============================================
-
+# ========== VISTAS INDIVIDUALES DE RUTAS ==========
 def mostrarMorro(request):
-    return render(request, 'html/rutas/vista-morro.html', {
-        'titulo_bienvenida': 'El Morro',
-        'descripcion_bienvenida': 'RUTAS - WALK APP',
-    })
+    return render(request, 'html/rutas/vista-morro.html')
 
 def mostrarCruces(request):
-    return render(request, 'html/rutas/vista-tres-cruces.html', {
-        'titulo_bienvenida': 'Las Tres Cruces',
-        'descripcion_bienvenida': 'RUTAS - WALK APP',
-    })
+    return render(request, 'html/rutas/vista-tres-cruces.html')
 
 def mostrarTorre24(request):
-    return render(request, 'html/rutas/torre_24.html', {
-        'titulo_bienvenida': 'Torre 24',
-        'descripcion_bienvenida': 'RUTAS - WALK APP',
-    })
+    return render(request, 'html/rutas/torre_24.html')
 
-# LOGIN Y CUENTA =============================================
-
+# ========== LOGIN Y PERFIL ==========
 @login_required
 def profile_view(request):
-    context = {
+    return render(request, 'html/perfil.html', {
         'nombre_usuario': request.user,
         'correo_electronico': request.user.email,
-        'contrase\u00f1a': request.user.password,
-    }
-    return render(request, 'html/perfil.html', context)
+        'contraseña': request.user.password,
+    })
 
 def mostrarLogin(request):
     return render(request, 'login/index.html')
@@ -107,8 +81,7 @@ def mostrarLogin3(request):
 def mostrarLogin5(request):
     return render(request, 'login/restablecer_contrasena.html')
 
-# JUEGOS =============================================
-
+# ========== JUEGOS ==========
 def mostrarVideogames(request):
     return render(request, 'html/juegos/trivia/index.html')
 
@@ -121,44 +94,36 @@ def mostrarVideogames12(request):
 def mostrarVideogames13(request):
     return render(request, 'html/juegos/trivia/final.html')
 
-# REGISTRO USUARIO =============================================
-
+# ========== REGISTRO DE USUARIO ==========
 def registro_usuario(request):
     if request.method == 'POST':
         form = RegistroUsuarioForms(request.POST)
         if form.is_valid():
             try:
-                username = form.cleaned_data['nombre_usuario']
-                email = form.cleaned_data['correo_electronico']
-                password = form.cleaned_data['contrase\u00f1a']
+                username = form.cleaned_data['username']
+                email = form.cleaned_data['email']
+                password = form.cleaned_data['password1']  # ← este es el bueno
 
-                try:
-                    validate_password(password)
-                except ValidationError as e:
-                    for error in e.messages:
-                        messages.error(request, error)
-                    return render(request, 'mi_app_registro/registro.html', {'form': form})
+                validate_password(password)
 
-                user_django = User.objects.create_user(
+                user = UsuarioPersonalizado.objects.create_user(
                     username=username,
                     email=email,
-                    password=password
+                    password=password,
+                    is_active=False
                 )
-                user_django.is_active = False
-                user_django.save()
 
-                uid = urlsafe_base64_encode(force_bytes(user_django.pk))
-                token = account_activation_token.make_token(user_django)
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+                token = account_activation_token.make_token(user)
                 activation_link = f"http://localhost:8000/activar/{uid}/{token}/"
 
-                mail_subject = 'Activa tu cuenta en WalkUp'
                 message = render_to_string('html/correo_activacion.html', {
-                    'user': user_django,
+                    'user': user,
                     'activation_link': activation_link
                 })
 
                 email_message = EmailMessage(
-                    subject=mail_subject,
+                    subject='Activa tu cuenta en Walk App',
                     body=message,
                     to=[email]
                 )
@@ -166,85 +131,96 @@ def registro_usuario(request):
                 email_message.encoding = "utf-8"
                 email_message.send()
 
-                messages.success(request, 'Cuenta creada. Verifica tu correo electr\u00f3nico para activarla.')
+                messages.success(request, 'Cuenta creada. Verifica tu correo electrónico para activarla.')
                 return redirect('login')
 
             except Exception as e:
                 messages.error(request, f'Error al crear usuario: {str(e)}')
-                return render(request, 'mi_app_registro/registro.html', {'form': form})
         else:
-            messages.error(request, 'Por favor corrige los errores del formulario.')
-            return render(request, 'mi_app_registro/registro.html', {'form': form})
+            print(form.errors)  #depuración
+            messages.error(request, 'Revisa los campos del formulario.')
     else:
         form = RegistroUsuarioForms()
+
     return render(request, 'mi_app_registro/registro.html', {'form': form})
 
-# ACTIVAR CUENTA =============================================
-
+# ========== ACTIVAR CUENTA ==========
 def activar_cuenta(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
+        user = UsuarioPersonalizado.objects.get(pk=uid)
     except:
         user = None
 
-    if user is not None and account_activation_token.check_token(user, token):
+    if user and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        messages.success(request, '\u00a1Cuenta activada! Ya puedes iniciar sesi\u00f3n.')
+        messages.success(request, '¡Cuenta activada! Ya puedes iniciar sesión.')
         return redirect('login')
     else:
-        messages.error(request, 'El enlace de activaci\u00f3n no es v\u00e1lido.')
+        messages.error(request, 'El enlace de activación no es válido.')
         return redirect('mi_app_registro/registro')
 
-# LOGIN / LOGOUT =============================================
-
+# ========== LOGIN Y LOGOUT ==========
 def login_usuario(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-
             user = authenticate(request, username=username, password=password)
-
-            if user is not None:
+            if user:
                 login(request, user)
-                messages.success(request, f'\u00a1Bienvenido de nuevo, {username}!')
+                messages.success(request, f'¡Bienvenido de nuevo, {username}!')
                 return redirect('home')
             else:
-                messages.error(request, 'Nombre de usuario o contrase\u00f1a incorrectos.')
+                messages.error(request, 'Nombre de usuario o contraseña incorrectos.')
     else:
         form = LoginForm()
-
     return render(request, 'mi_app_registro/login.html', {'form': form})
 
 def logout_usuario(request):
     logout(request)
-    messages.info(request, 'Has cerrado sesi\u00f3n correctamente.')
+    messages.info(request, 'Has cerrado sesión correctamente.')
     return redirect('mi_app_registro/login')
 
+# ========== VISTAS DE ADMINISTRADOR ==========
+@staff_member_required
+def admin_dashboard(request):
+    return render(request, 'admin/admin_dashboard.html')
 
+@staff_member_required
+def admin_estadisticas(request):
+    return render(request, 'admin/admin_estadisticas.html')
 
-# =========== perfil de usuario =======
+@staff_member_required
+def admin_rutas(request):
+    return render(request, 'admin/admin_rutas.html')
 
+@staff_member_required
+def admin_reportes(request):
+    return render(request, 'admin/admin_reportes.html')
+
+@user_passes_test(lambda u: u.is_superuser)
+@login_required
+def admin_usuarios(request):
+    usuarios = UsuarioPersonalizado.objects.all().order_by('-date_joined') 
+    return render(request, 'admin/admin_usuarios.html', {'usuarios': usuarios})
+
+# ========== PERFIL USUARIO ==========
 @login_required
 def perfil_usuario(request):
     rutas_recorridas = RutaRecorrida.objects.filter(usuario=request.user)
-    total_km = sum(ruta.ruta.distancia_km for ruta in rutas_recorridas)
-    total_horas = sum(ruta.ruta.duracion_horas for ruta in rutas_recorridas)
-
-    context = {
+    total_km = sum(r.ruta.longitud for r in rutas_recorridas)
+    total_horas = len(rutas_recorridas) * 1  # Suponiendo 1h por ruta por ahora
+    return render(request, 'html/perfil_usuario.html', {
         'usuario': request.user,
         'rutas_recorridas': rutas_recorridas,
         'total_km': total_km,
         'total_horas': total_horas,
-    }
-    return render(request, 'html/perfil_usuario.html', context)
+    })
 
-
-# RUTAS (CRUD) =============================================
-
+# ========== CRUD RUTAS ==========
 def lista_rutas(request):
     rutas = Ruta.objects.all().order_by('nombre_ruta')
     return render(request, 'html/rutas.html', {'rutas': rutas})
@@ -255,7 +231,7 @@ def detalle_ruta(request, ruta_id):
 
 def crear_ruta(request):
     if request.method == 'POST':
-        form = RutaForm(request.POST)
+        form = RutaForm(request.POST, request.FILES)
         if form.is_valid():
             nueva_ruta = form.save()
             return redirect('rutas')
@@ -263,20 +239,50 @@ def crear_ruta(request):
         form = RutaForm()
     return render(request, 'html/rutas/crear_ruta.html', {'form': form})
 
-# FAVORITAS =============================================
-
+# ========== FAVORITOS ==========
 def marcar_favorita(request, ruta_id, usuario_id):
     ruta = get_object_or_404(Ruta, pk=ruta_id)
-    usuario = get_object_or_404(Usuario, pk=usuario_id)
-
+    usuario = get_object_or_404(UsuarioPersonalizado, pk=usuario_id)
     if not UserRutaFavorita.objects.filter(usuario=usuario, ruta=ruta).exists():
         UserRutaFavorita.objects.create(usuario=usuario, ruta=ruta)
-
     return redirect('detalle_ruta', ruta_id=ruta.id)
 
 def quitar_favorita(request, ruta_id, usuario_id):
     ruta = get_object_or_404(Ruta, pk=ruta_id)
-    usuario = get_object_or_404(Usuario, pk=usuario_id)
-
+    usuario = get_object_or_404(UsuarioPersonalizado, pk=usuario_id)
     UserRutaFavorita.objects.filter(usuario=usuario, ruta=ruta).delete()
     return redirect('detalle_ruta', ruta_id=ruta.id)
+
+#==================
+# COMUNIDAD
+#==================
+
+@login_required
+def comunidad_view(request):
+    publicaciones = Publicacion.objects.all().order_by('-fecha_publicacion')
+
+    if request.method == 'POST':
+        if 'comentario' in request.POST:
+            comentario_form = ComentarioForm(request.POST)
+            if comentario_form.is_valid():
+                comentario = comentario_form.save(commit=False)
+                comentario.usuario = request.user
+                comentario.publicacion_id = request.POST.get('publicacion_id')
+                comentario.save()
+                return redirect('comunidad')
+        else:
+            publicacion_form = PublicacionForm(request.POST, request.FILES)
+            if publicacion_form.is_valid():
+                publicacion = publicacion_form.save(commit=False)
+                publicacion.usuario = request.user
+                publicacion.save()
+                return redirect('comunidad')
+    else:
+        publicacion_form = PublicacionForm()
+        comentario_form = ComentarioForm()
+
+    return render(request, 'html/comunidad.html', {
+        'publicaciones': publicaciones,
+        'publicacion_form': publicacion_form,
+        'comentario_form': comentario_form,
+    })

@@ -1,25 +1,26 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
-# Create your models here.
+# ===========================
+# MODELO PERSONALIZADO DE USUARIO
+# ===========================
 
-class Usuario(models.Model):
-    nombre_usuario = models.CharField(max_length=100, unique=True)
-    correo_electronico = models.EmailField(unique=True)
-    contraseña = models.CharField(max_length=128)
-    contraseña2 = models.CharField(max_length=128,blank=True, null=True)
+class UsuarioPersonalizado(AbstractUser):
 
     def __str__(self):
-        return self.nombre_usuario
+        return self.username
 
-# modelo de rutas 
-
+# ===========================
+# MODELO DE RUTA
+# ===========================
 
 class Ruta(models.Model):
     nombre_ruta = models.CharField(max_length=255, verbose_name="Nombre de la Ruta")
     descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")
     imagen = models.ImageField(upload_to='rutas_imagenes/', blank=True, null=True)
     longitud = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Longitud (km)")
+    
     dificultad_choices = [
         ('FACIL', 'Fácil'),
         ('MODERADO', 'Moderado'),
@@ -27,50 +28,92 @@ class Ruta(models.Model):
         ('EXTREMO', 'Extremo'),
     ]
     dificultad = models.CharField(max_length=50, choices=dificultad_choices, default='MODERADO', verbose_name="Dificultad")
+
     duracion_estimada = models.CharField(max_length=100, blank=True, null=True, verbose_name="Duración Estimada")
     altitud_maxima = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="Altitud Máxima (m)")
     ubicacion = models.CharField(max_length=255, blank=True, null=True, verbose_name="Ubicación")
     puntos_interes = models.TextField(blank=True, null=True, verbose_name="Puntos de Interés")
+    
     coordenadas_inicio_lat = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name="Latitud de Inicio")
     coordenadas_inicio_lon = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name="Longitud de Inicio")
     coordenadas_fin_lat = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name="Latitud de Fin")
     coordenadas_fin_lon = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name="Longitud de Fin")
-    
-    # Relación Uno a Muchos: Una ruta es creada por un Usuario.
-    creada_por = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True, blank=True, related_name='rutas_creadas', verbose_name="Creada por")
-    
+
+    creada_por = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        related_name='rutas_creadas',
+        verbose_name="Creada por"
+    )
+
     fecha_creacion = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de Creación")
 
-    usuarios_favoritos = models.ManyToManyField(Usuario, through='UserRutaFavorita', related_name='rutas_favoritas', verbose_name="Marcada como Favorita por")
+    usuarios_favoritos = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        through='UserRutaFavorita',
+        related_name='rutas_favoritas',
+        verbose_name="Marcada como Favorita por"
+    )
 
     class Meta:
         verbose_name = "Ruta"
         verbose_name_plural = "Rutas"
-        ordering = ['nombre_ruta'] # Ordena las rutas por nombre por defecto
+        ordering = ['nombre_ruta']
 
     def __str__(self):
         return self.nombre_ruta
-    
-    # registro de rutas del usuario
+
+# ===========================
+# MODELO: RUTA RECORRIDA
+# ===========================
 
 class RutaRecorrida(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     ruta = models.ForeignKey(Ruta, on_delete=models.CASCADE)
     fecha = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.usuario.username} - {self.ruta.nombre}"
+        return f"{self.usuario.username} - {self.ruta.nombre_ruta}"
+
+# ===========================
+# MODELO: RUTA FAVORITA
+# ===========================
 
 class UserRutaFavorita(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     ruta = models.ForeignKey(Ruta, on_delete=models.CASCADE)
     fecha_agregado = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        # Asegura que un Usuario solo pueda marcar una Ruta como favorita una vez
-        unique_together = ('usuario', 'ruta') 
+        unique_together = ('usuario', 'ruta')
         verbose_name = "Ruta Favorita de Usuario"
         verbose_name_plural = "Rutas Favoritas de Usuarios"
 
     def __str__(self):
-        return f"{self.usuario.nombre_usuario} - {self.ruta.nombre_ruta}"
+        return f"{self.usuario.username} - {self.ruta.nombre_ruta}"
+    
+
+#==================
+# COMUNIDAD
+#==================
+
+class Publicacion(models.Model):
+    usuario = models.ForeignKey(UsuarioPersonalizado, on_delete=models.CASCADE)
+    ruta = models.ForeignKey(Ruta, on_delete=models.CASCADE)
+    comentario = models.TextField(max_length=500)
+    imagen = models.ImageField(upload_to='publicaciones/')
+    fecha_publicacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.usuario.username} - {self.ruta.nombre}"
+
+class Comentario(models.Model):
+    publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, related_name='comentarios')
+    usuario = models.ForeignKey(UsuarioPersonalizado, on_delete=models.CASCADE)
+    texto = models.TextField(max_length=300)
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.usuario.username} comentó en {self.publicacion}"

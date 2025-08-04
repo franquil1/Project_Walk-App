@@ -18,6 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from Aplicacion import views
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render
+from Aplicacion.models import UsuarioPersonalizado 
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,34 +35,30 @@ urlpatterns = [
     path('ranking/', views.mostrarRanking, name='ranking'),
     path('registro/', views.registro_usuario, name='registro'),
     path('login/', views.login_usuario, name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'), 
+    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('', include('Aplicacion.urls')),
 
-
-
-
-    # URL RUTAS
-
+    # URL RUTAS ESTÁTICAS
     path('morro/', views.mostrarMorro, name='morro'),
     path('cruces/', views.mostrarCruces, name='cruces'),
     path('torre24/', views.mostrarTorre24, name='torre24'),
 
-    # ACCOUNT
-
+    # ACCOUNT - Vistas de login
     path('login/', views.mostrarLogin, name='login'),
     path('login2/', views.mostrarLogin2, name='login2'),
     path('login3/', views.mostrarLogin3, name='login3'),
     path('login5/', views.mostrarLogin5, name='login5'),
 
-    # VIDEOGAMES
-
-    # Trivia Home
+    # VIDEOJUEGOS
     path('trivia/', views.mostrarVideogames, name='trivia_index'),
-    # Trivia Menu
     path('trivia/menu/', views.mostrarVideogames11, name='trivia_menu'),
-    # Trivia Juego
     path('trivia/juego/', views.mostrarVideogames12, name='trivia_juego'),
-    # Trivia Final
     path('trivia/final/', views.mostrarVideogames13, name='trivia_final'),
-
 ]
+
+# URL panel de administración personalizado
+@user_passes_test(lambda u: u.is_superuser)
+@login_required
+def admin_usuarios(request):
+    usuarios = User.objects.all()
+    return render(request, 'admin/admin_usuarios.html', {'usuarios': usuarios})
