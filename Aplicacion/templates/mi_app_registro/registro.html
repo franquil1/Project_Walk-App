@@ -14,7 +14,8 @@
                 <img src="{% static 'images/imagenes/logo.jpg' %}" alt="Logo">
                 <h1>Registro de Usuario</h1>
 
-                <!-- ✅ Mostrar errores del formulario -->
+                <!-- Comentado: Errores de campos individuales -->
+                
                 {% if form.errors %}
                     <div class="errores">
                         <ul>
@@ -26,8 +27,10 @@
                         </ul>
                     </div>
                 {% endif %}
+                
 
-                <!-- Mostrar mensajes de éxito o error -->
+                <!-- Comentado: Mensajes de éxito o error -->
+                
                 {% if messages %}
                     <ul class="mensajes">
                         {% for message in messages %}
@@ -37,9 +40,15 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
+                
 
-                <!-- Formulario -->
-                {{ form.as_p }}
+                <!-- Formulario sin mostrar errores -->
+                {% for field in form %}
+                    <p>
+                        {{ field.label_tag }}<br>
+                        {{ field }}
+                    </p>
+                {% endfor %}
 
                 <button type="submit">Registrar</button>
                 <p><a href="{% url 'login' %}">¿Ya tienes cuenta? Inicia sesión</a></p>

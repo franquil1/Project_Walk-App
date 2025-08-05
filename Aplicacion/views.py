@@ -51,7 +51,7 @@ def mostrarRutas(request):
     return render(request, 'html/rutas.html')
 
 def mostrarJuegos(request):
-    return render(request, 'html/juegos/trivia/index.html')
+    return render(request, 'html/juegos/juegos.html')
 
 def mostrarRanking(request):
     return render(request, 'html/ranking.html')
@@ -362,7 +362,7 @@ def comunidad_view(request):
 # Buscador
 #=========================
 def buscar_rutas(request):
-    query = request.GET.get('q')
+    query = request.GET.get('q', '').strip()
 
     if query:
         rutas = Ruta.objects.filter(nombre_ruta__icontains=query)
@@ -370,7 +370,7 @@ def buscar_rutas(request):
         if rutas.count() == 1:
             return redirect('detalle_ruta', ruta_id=rutas.first().id)
         elif rutas.exists():
-            return redirect('detalle_ruta', ruta_id=rutas.first().id)
+            return render(request, 'html/lista_resultados.html', {'rutas': rutas, 'query': query})
         else:
             return render(request, 'html/sin_resultados.html', {'query': query})
 

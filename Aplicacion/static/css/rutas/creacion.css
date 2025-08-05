@@ -7,9 +7,14 @@
 
 /* ========== BODY ========== */
 body {
+    background-image: url(../../images/fotos/Wallpaper_Rutas.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f7fa;
-    padding: 2rem;
+    margin-top: 7%;
     color: #333;
 }
 

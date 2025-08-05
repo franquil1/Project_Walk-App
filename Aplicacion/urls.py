@@ -38,7 +38,7 @@ urlpatterns = [
     # ============================
     path('dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('estadisticas/', views.admin_estadisticas, name='admin_estadisticas'),
-    path('rutas/', views.admin_rutas, name='admin_rutas'),
+    path('rutas_admin/', views.admin_rutas, name='admin_rutas'),
     path('reportes/', views.admin_reportes, name='admin_reportes'),
     path('usuarios/', views.admin_usuarios, name='admin_usuarios'),
 

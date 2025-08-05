@@ -25,6 +25,7 @@
         {{ form.as_p }} {# Esto renderizará los campos username y password del LoginForm #}
         <button type="submit">Iniciar Sesión</button>
         <p>¿No tienes cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a></p>
+        <p><a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a></p>
     </form>
 
 </body>

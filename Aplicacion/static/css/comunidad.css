@@ -1,9 +1,8 @@
 :root {
     --color-acento: #00b341;
-    --color-fondo: #f9f9f9;
     --color-card: #ffffff;
     --color-texto: #1c1c1c;
-    --color-secundario: #777;
+    --color-secundario: #716c6c;
     --borde-suave: 12px;
     --sombra-suave: 0 4px 14px rgba(0, 0, 0, 0.1);
     --transicion: all 0.3s ease;
@@ -17,22 +16,30 @@
 }
 
 body {
+    position: relative;
     font-family: var(--fuente);
-    background-color: var(--color-fondo);
     color: var(--color-texto);
     line-height: 1.6;
+    min-height: 100vh;
+     margin-top: 120px;
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0)), 
+                url(../images/fotos/Wallpaper_Rutas.png) center center fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
+/* Contenedor de comunidad con fondo blanco y bordes suaves */
 .comunidad-container {
     max-width: 1000px;
     margin: auto;
     padding: 2rem;
-    background-color: var(--color-card);
+    background-color: rgba(255, 255, 255, 0.95); /* Leve transparencia */
     border-radius: var(--borde-suave);
     box-shadow: var(--sombra-suave);
     margin-top: 2rem;
 }
 
+/* Título principal */
 .titulo-comunidad {
     text-align: center;
     font-size: 2.4rem;
@@ -41,6 +48,7 @@ body {
     font-weight: bold;
 }
 
+/* Mensajes del sistema */
 .messages {
     list-style: none;
     margin-bottom: 2rem;
@@ -54,8 +62,9 @@ body {
 .alert.success { background-color: #d0f5dd; color: #137333; }
 .alert.error { background-color: #fddede; color: #a33030; }
 
+/* Formulario de publicaciones */
 .formulario-publicacion {
-    background-color: #f1f1f1;
+    background-color: #f9f9f9;
     padding: 1.5rem;
     border-radius: var(--borde-suave);
     box-shadow: var(--sombra-suave);
@@ -93,6 +102,7 @@ select:focus {
     color: #d00000;
 }
 
+/* Botón de publicar */
 .btn-publicar {
     margin-top: 1.5rem;
     padding: 0.9rem 1.6rem;
@@ -115,6 +125,7 @@ select:focus {
     margin: 3rem 0;
 }
 
+/* Tarjetas de publicaciones */
 .card-publicacion {
     background-color: #ffffff;
     padding: 1.5rem;
@@ -146,10 +157,12 @@ select:focus {
     max-height: 400px;
 }
 
+/* Contenido de publicaciones */
 .contenido-publicacion p {
     margin-bottom: 0.7rem;
 }
 
+/* Comentarios */
 .comentarios {
     margin-top: 1.5rem;
     background-color: #f5f5f5;
@@ -168,6 +181,7 @@ select:focus {
     color: var(--color-secundario);
 }
 
+/* Comentario individual */
 .form-comentario {
     display: flex;
     margin-top: 1rem;
@@ -202,7 +216,6 @@ select:focus {
     margin-top: 0.5rem;
     flex-wrap: wrap;
 }
-
 .upload-label {
     background-color: var(--color-acento);
     color: white;
@@ -218,11 +231,9 @@ select:focus {
 .upload-label:hover {
     background-color: #009c36;
 }
-
 .custom-file-upload input[type="file"] {
     display: none;
 }
-
 .file-name {
     font-size: 0.9rem;
     color: var(--color-secundario);
@@ -232,6 +243,7 @@ select:focus {
     text-overflow: ellipsis;
 }
 
+/* Responsive */
 @media (max-width: 600px) {
     .form-comentario {
         flex-direction: column;

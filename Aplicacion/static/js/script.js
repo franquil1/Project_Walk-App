@@ -116,3 +116,34 @@ document.addEventListener('keydown', function (e) {
     ocultarBuscador();
   }
 });
+
+/* responsit */
+ document.addEventListener("DOMContentLoaded", function () {
+    const menu = document.getElementById("mobileMenu");
+    const toggle = document.querySelector(".hamburger");
+    const closeBtn = document.getElementById("closeMenu");
+
+    // Abrir menú
+    toggle.addEventListener("click", () => {
+      menu.classList.add("active");
+      document.body.classList.add("menu-open");
+    });
+
+    // Cerrar menú
+    closeBtn.addEventListener("click", () => {
+      menu.classList.remove("active");
+      document.body.classList.remove("menu-open");
+    });
+
+    // Cerrar al hacer clic fuera
+    window.addEventListener("click", (e) => {
+      if (
+        menu.classList.contains("active") &&
+        !menu.contains(e.target) &&
+        !toggle.contains(e.target)
+      ) {
+        menu.classList.remove("active");
+        document.body.classList.remove("menu-open");
+      }
+    });
+  });

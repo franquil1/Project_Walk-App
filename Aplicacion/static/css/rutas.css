@@ -1,19 +1,17 @@
-/* rutas.css */
-
-/* Main container for the routes section */
 .rutas-container {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     padding: 20px;
     background-color: #f4f4f4;
     color: #333;
-    max-width: 1200px; /* Increased max-width for more columns */
-    margin: 20px auto; /* Centers the container and adds some top/bottom margin */
+    max-width: 1200px; 
+    margin: 20px auto; 
+    margin-top: 120px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Title styling */
+
 .rutas-titulo {
     color: #2c3e50;
     text-align: center;

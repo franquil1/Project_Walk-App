@@ -1,7 +1,17 @@
 /* ================= 
+RESET BÁSICO Y FUENTE GLOBAL
+================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    margin-top: 20px;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ================= 
 PANEL DE ADMINISTRACIÓN 
 ================= */
-
 .admin-panel {
     max-width: 1100px;
     margin: 0 auto;
@@ -11,6 +21,9 @@ PANEL DE ADMINISTRACIÓN
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
+/* ================= 
+BIENVENIDA
+================= */
 .bienvenida {
     text-align: center;
     margin-bottom: 50px;
@@ -27,7 +40,16 @@ PANEL DE ADMINISTRACIÓN
     color: #7f8c8d;
 }
 
-/* ===== GRID DE CARDS ===== */
+/* Responsive para bienvenida */
+@media (max-width: 768px) {
+    .bienvenida h1 {
+        font-size: 1.6rem;
+    }
+}
+
+/* ================= 
+GRID DE CARDS 
+================= */
 .admin-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -63,11 +85,8 @@ PANEL DE ADMINISTRACIÓN
     color: #2980b9;
 }
 
+/* Responsive para cards */
 @media (max-width: 768px) {
-    .bienvenida h1 {
-        font-size: 1.6rem;
-    }
-
     .admin-card h2 {
         font-size: 1.2rem;
     }
@@ -78,17 +97,10 @@ PANEL DE ADMINISTRACIÓN
 }
 
 /* ========================= 
-    Usuarios
- ========================= */
+    USUARIOS
+========================= */
 
- /* Reset básico */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-/* Título */
+/* Título de la sección de usuarios */
 h1 {
     text-align: center;
     margin-bottom: 30px;
@@ -143,7 +155,7 @@ tbody tr td[colspan] {
     font-style: italic;
 }
 
-/* Responsive */
+/* Responsive para tabla */
 @media (max-width: 768px) {
     table, thead, tbody, th, td, tr {
         display: block;
@@ -177,12 +189,16 @@ tbody tr td[colspan] {
         text-transform: capitalize;
     }
 }
-/* ======================
-Estadisticas
-=======================*/
+
+/* ====================== 
+    ESTADÍSTICAS 
+======================= */
 .charts-container {
     margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
     gap: 40px;
+    justify-content: center;
 }
 
 canvas {
@@ -190,4 +206,14 @@ canvas {
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     padding: 1rem;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive para gráficas */
+@media (max-width: 768px) {
+    .charts-container {
+        flex-direction: column;
+        gap: 20px;
+    }
 }
